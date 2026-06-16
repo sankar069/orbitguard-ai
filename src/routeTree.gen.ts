@@ -9,38 +9,168 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsoleIndexRouteImport } from './routes/console.index'
+import { Route as ConsoleTopologyRouteImport } from './routes/console.topology'
+import { Route as ConsoleSustainabilityRouteImport } from './routes/console.sustainability'
+import { Route as ConsoleResponsibleAiRouteImport } from './routes/console.responsible-ai'
+import { Route as ConsolePredictionsRouteImport } from './routes/console.predictions'
+import { Route as ConsoleIntelligenceRouteImport } from './routes/console.intelligence'
+import { Route as ConsoleDevicesRouteImport } from './routes/console.devices'
+import { Route as ConsoleAboutRouteImport } from './routes/console.about'
+import { Route as ConsoleDevicesDeviceIdRouteImport } from './routes/console.devices.$deviceId'
 
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleTopologyRoute = ConsoleTopologyRouteImport.update({
+  id: '/topology',
+  path: '/topology',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSustainabilityRoute = ConsoleSustainabilityRouteImport.update({
+  id: '/sustainability',
+  path: '/sustainability',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleResponsibleAiRoute = ConsoleResponsibleAiRouteImport.update({
+  id: '/responsible-ai',
+  path: '/responsible-ai',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsolePredictionsRoute = ConsolePredictionsRouteImport.update({
+  id: '/predictions',
+  path: '/predictions',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleIntelligenceRoute = ConsoleIntelligenceRouteImport.update({
+  id: '/intelligence',
+  path: '/intelligence',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDevicesRoute = ConsoleDevicesRouteImport.update({
+  id: '/devices',
+  path: '/devices',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAboutRoute = ConsoleAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDevicesDeviceIdRoute = ConsoleDevicesDeviceIdRouteImport.update({
+  id: '/$deviceId',
+  path: '/$deviceId',
+  getParentRoute: () => ConsoleDevicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
+  '/console/about': typeof ConsoleAboutRoute
+  '/console/devices': typeof ConsoleDevicesRouteWithChildren
+  '/console/intelligence': typeof ConsoleIntelligenceRoute
+  '/console/predictions': typeof ConsolePredictionsRoute
+  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
+  '/console/sustainability': typeof ConsoleSustainabilityRoute
+  '/console/topology': typeof ConsoleTopologyRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/console/about': typeof ConsoleAboutRoute
+  '/console/devices': typeof ConsoleDevicesRouteWithChildren
+  '/console/intelligence': typeof ConsoleIntelligenceRoute
+  '/console/predictions': typeof ConsolePredictionsRoute
+  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
+  '/console/sustainability': typeof ConsoleSustainabilityRoute
+  '/console/topology': typeof ConsoleTopologyRoute
+  '/console': typeof ConsoleIndexRoute
+  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/console': typeof ConsoleRouteWithChildren
+  '/console/about': typeof ConsoleAboutRoute
+  '/console/devices': typeof ConsoleDevicesRouteWithChildren
+  '/console/intelligence': typeof ConsoleIntelligenceRoute
+  '/console/predictions': typeof ConsolePredictionsRoute
+  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
+  '/console/sustainability': typeof ConsoleSustainabilityRoute
+  '/console/topology': typeof ConsoleTopologyRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/console'
+    | '/console/about'
+    | '/console/devices'
+    | '/console/intelligence'
+    | '/console/predictions'
+    | '/console/responsible-ai'
+    | '/console/sustainability'
+    | '/console/topology'
+    | '/console/'
+    | '/console/devices/$deviceId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/console/about'
+    | '/console/devices'
+    | '/console/intelligence'
+    | '/console/predictions'
+    | '/console/responsible-ai'
+    | '/console/sustainability'
+    | '/console/topology'
+    | '/console'
+    | '/console/devices/$deviceId'
+  id:
+    | '__root__'
+    | '/'
+    | '/console'
+    | '/console/about'
+    | '/console/devices'
+    | '/console/intelligence'
+    | '/console/predictions'
+    | '/console/responsible-ai'
+    | '/console/sustainability'
+    | '/console/topology'
+    | '/console/'
+    | '/console/devices/$deviceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +178,113 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console/': {
+      id: '/console/'
+      path: '/'
+      fullPath: '/console/'
+      preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/topology': {
+      id: '/console/topology'
+      path: '/topology'
+      fullPath: '/console/topology'
+      preLoaderRoute: typeof ConsoleTopologyRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/sustainability': {
+      id: '/console/sustainability'
+      path: '/sustainability'
+      fullPath: '/console/sustainability'
+      preLoaderRoute: typeof ConsoleSustainabilityRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/responsible-ai': {
+      id: '/console/responsible-ai'
+      path: '/responsible-ai'
+      fullPath: '/console/responsible-ai'
+      preLoaderRoute: typeof ConsoleResponsibleAiRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/predictions': {
+      id: '/console/predictions'
+      path: '/predictions'
+      fullPath: '/console/predictions'
+      preLoaderRoute: typeof ConsolePredictionsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/intelligence': {
+      id: '/console/intelligence'
+      path: '/intelligence'
+      fullPath: '/console/intelligence'
+      preLoaderRoute: typeof ConsoleIntelligenceRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/devices': {
+      id: '/console/devices'
+      path: '/devices'
+      fullPath: '/console/devices'
+      preLoaderRoute: typeof ConsoleDevicesRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/about': {
+      id: '/console/about'
+      path: '/about'
+      fullPath: '/console/about'
+      preLoaderRoute: typeof ConsoleAboutRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/devices/$deviceId': {
+      id: '/console/devices/$deviceId'
+      path: '/$deviceId'
+      fullPath: '/console/devices/$deviceId'
+      preLoaderRoute: typeof ConsoleDevicesDeviceIdRouteImport
+      parentRoute: typeof ConsoleDevicesRoute
+    }
   }
 }
 
+interface ConsoleDevicesRouteChildren {
+  ConsoleDevicesDeviceIdRoute: typeof ConsoleDevicesDeviceIdRoute
+}
+
+const ConsoleDevicesRouteChildren: ConsoleDevicesRouteChildren = {
+  ConsoleDevicesDeviceIdRoute: ConsoleDevicesDeviceIdRoute,
+}
+
+const ConsoleDevicesRouteWithChildren = ConsoleDevicesRoute._addFileChildren(
+  ConsoleDevicesRouteChildren,
+)
+
+interface ConsoleRouteChildren {
+  ConsoleAboutRoute: typeof ConsoleAboutRoute
+  ConsoleDevicesRoute: typeof ConsoleDevicesRouteWithChildren
+  ConsoleIntelligenceRoute: typeof ConsoleIntelligenceRoute
+  ConsolePredictionsRoute: typeof ConsolePredictionsRoute
+  ConsoleResponsibleAiRoute: typeof ConsoleResponsibleAiRoute
+  ConsoleSustainabilityRoute: typeof ConsoleSustainabilityRoute
+  ConsoleTopologyRoute: typeof ConsoleTopologyRoute
+  ConsoleIndexRoute: typeof ConsoleIndexRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleAboutRoute: ConsoleAboutRoute,
+  ConsoleDevicesRoute: ConsoleDevicesRouteWithChildren,
+  ConsoleIntelligenceRoute: ConsoleIntelligenceRoute,
+  ConsolePredictionsRoute: ConsolePredictionsRoute,
+  ConsoleResponsibleAiRoute: ConsoleResponsibleAiRoute,
+  ConsoleSustainabilityRoute: ConsoleSustainabilityRoute,
+  ConsoleTopologyRoute: ConsoleTopologyRoute,
+  ConsoleIndexRoute: ConsoleIndexRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
