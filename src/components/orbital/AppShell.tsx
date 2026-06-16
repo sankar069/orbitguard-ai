@@ -6,16 +6,16 @@ import {
 import { useOrbital } from "@/lib/orbital/store";
 import { type ReactNode } from "react";
 
-const nav = [
-  { to: "/console",                  label: "Mission Overview",       icon: Gauge, exact: true },
-  { to: "/console/topology",         label: "Network Topology",       icon: Boxes },
-  { to: "/console/devices",          label: "Devices",                icon: Cpu },
-  { to: "/console/predictions",      label: "Predictions",            icon: Activity },
+const nav: { to: string; label: string; icon: typeof Gauge; exact?: boolean }[] = [
+  { to: "/console",                  label: "Mission Overview",        icon: Gauge, exact: true },
+  { to: "/console/topology",         label: "Network Topology",        icon: Boxes },
+  { to: "/console/devices",          label: "Devices",                 icon: Cpu },
+  { to: "/console/predictions",      label: "Predictions",             icon: Activity },
   { to: "/console/intelligence",     label: "Predictive Intelligence", icon: BrainCircuit },
-  { to: "/console/sustainability",   label: "Sustainability Impact",  icon: Leaf },
-  { to: "/console/responsible-ai",   label: "Responsible AI",         icon: ShieldCheck },
-  { to: "/console/about",            label: "About",                  icon: Info },
-] as const;
+  { to: "/console/sustainability",   label: "Sustainability Impact",   icon: Leaf },
+  { to: "/console/responsible-ai",   label: "Responsible AI",          icon: ShieldCheck },
+  { to: "/console/about",            label: "About",                   icon: Info },
+];
 
 const navStubLabels: { to: string; label: string; icon: typeof Gauge; soon?: boolean }[] = [
   { to: "/console/copilot",       label: "Orbital Copilot",   icon: Radio,     soon: true },
