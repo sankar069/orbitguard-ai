@@ -115,13 +115,24 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+import { useSimulationPersistence } from "../lib/orbital/persistence";
+import { useSimulatedRecovery } from "../lib/orbital/recovery";
+
+function SimulationPersistenceWrapper({ children }: { children: ReactNode }) {
+  useSimulationPersistence();
+  useSimulatedRecovery();
+  return <>{children}</>;
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <OrbitalProvider>
-          <Outlet />
+          <SimulationPersistenceWrapper>
+            <Outlet />
+          </SimulationPersistenceWrapper>
         </OrbitalProvider>
       </AuthProvider>
     </QueryClientProvider>

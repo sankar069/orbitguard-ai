@@ -17,11 +17,17 @@ import { Route as AuthenticatedConsoleRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedConsoleIndexRouteImport } from './routes/_authenticated/console.index'
 import { Route as AuthenticatedConsoleTopologyRouteImport } from './routes/_authenticated/console.topology'
 import { Route as AuthenticatedConsoleSustainabilityRouteImport } from './routes/_authenticated/console.sustainability'
+import { Route as AuthenticatedConsoleSettingsRouteImport } from './routes/_authenticated/console.settings'
 import { Route as AuthenticatedConsoleResponsibleAiRouteImport } from './routes/_authenticated/console.responsible-ai'
 import { Route as AuthenticatedConsolePredictionsRouteImport } from './routes/_authenticated/console.predictions'
+import { Route as AuthenticatedConsoleKnowledgeRouteImport } from './routes/_authenticated/console.knowledge'
 import { Route as AuthenticatedConsoleIntelligenceRouteImport } from './routes/_authenticated/console.intelligence'
+import { Route as AuthenticatedConsoleIncidentsRouteImport } from './routes/_authenticated/console.incidents'
 import { Route as AuthenticatedConsoleDevicesRouteImport } from './routes/_authenticated/console.devices'
+import { Route as AuthenticatedConsoleCopilotRouteImport } from './routes/_authenticated/console.copilot'
+import { Route as AuthenticatedConsoleAuditRouteImport } from './routes/_authenticated/console.audit'
 import { Route as AuthenticatedConsoleAboutRouteImport } from './routes/_authenticated/console.about'
+import { Route as AuthenticatedConsoleIncidentsIncidentIdRouteImport } from './routes/_authenticated/console.incidents.$incidentId'
 import { Route as AuthenticatedConsoleDevicesDeviceIdRouteImport } from './routes/_authenticated/console.devices.$deviceId'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -66,6 +72,12 @@ const AuthenticatedConsoleSustainabilityRoute =
     path: '/sustainability',
     getParentRoute: () => AuthenticatedConsoleRoute,
   } as any)
+const AuthenticatedConsoleSettingsRoute =
+  AuthenticatedConsoleSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
 const AuthenticatedConsoleResponsibleAiRoute =
   AuthenticatedConsoleResponsibleAiRouteImport.update({
     id: '/responsible-ai',
@@ -78,10 +90,22 @@ const AuthenticatedConsolePredictionsRoute =
     path: '/predictions',
     getParentRoute: () => AuthenticatedConsoleRoute,
   } as any)
+const AuthenticatedConsoleKnowledgeRoute =
+  AuthenticatedConsoleKnowledgeRouteImport.update({
+    id: '/knowledge',
+    path: '/knowledge',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
 const AuthenticatedConsoleIntelligenceRoute =
   AuthenticatedConsoleIntelligenceRouteImport.update({
     id: '/intelligence',
     path: '/intelligence',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleIncidentsRoute =
+  AuthenticatedConsoleIncidentsRouteImport.update({
+    id: '/incidents',
+    path: '/incidents',
     getParentRoute: () => AuthenticatedConsoleRoute,
   } as any)
 const AuthenticatedConsoleDevicesRoute =
@@ -90,11 +114,29 @@ const AuthenticatedConsoleDevicesRoute =
     path: '/devices',
     getParentRoute: () => AuthenticatedConsoleRoute,
   } as any)
+const AuthenticatedConsoleCopilotRoute =
+  AuthenticatedConsoleCopilotRouteImport.update({
+    id: '/copilot',
+    path: '/copilot',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleAuditRoute =
+  AuthenticatedConsoleAuditRouteImport.update({
+    id: '/audit',
+    path: '/audit',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
 const AuthenticatedConsoleAboutRoute =
   AuthenticatedConsoleAboutRouteImport.update({
     id: '/about',
     path: '/about',
     getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleIncidentsIncidentIdRoute =
+  AuthenticatedConsoleIncidentsIncidentIdRouteImport.update({
+    id: '/$incidentId',
+    path: '/$incidentId',
+    getParentRoute: () => AuthenticatedConsoleIncidentsRoute,
   } as any)
 const AuthenticatedConsoleDevicesDeviceIdRoute =
   AuthenticatedConsoleDevicesDeviceIdRouteImport.update({
@@ -109,28 +151,40 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/console': typeof AuthenticatedConsoleRouteWithChildren
   '/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/console/audit': typeof AuthenticatedConsoleAuditRoute
+  '/console/copilot': typeof AuthenticatedConsoleCopilotRoute
   '/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/console/incidents': typeof AuthenticatedConsoleIncidentsRouteWithChildren
   '/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/console/knowledge': typeof AuthenticatedConsoleKnowledgeRoute
   '/console/predictions': typeof AuthenticatedConsolePredictionsRoute
   '/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/console/settings': typeof AuthenticatedConsoleSettingsRoute
   '/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
   '/console/topology': typeof AuthenticatedConsoleTopologyRoute
   '/console/': typeof AuthenticatedConsoleIndexRoute
   '/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
+  '/console/incidents/$incidentId': typeof AuthenticatedConsoleIncidentsIncidentIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/console/audit': typeof AuthenticatedConsoleAuditRoute
+  '/console/copilot': typeof AuthenticatedConsoleCopilotRoute
   '/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/console/incidents': typeof AuthenticatedConsoleIncidentsRouteWithChildren
   '/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/console/knowledge': typeof AuthenticatedConsoleKnowledgeRoute
   '/console/predictions': typeof AuthenticatedConsolePredictionsRoute
   '/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/console/settings': typeof AuthenticatedConsoleSettingsRoute
   '/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
   '/console/topology': typeof AuthenticatedConsoleTopologyRoute
   '/console': typeof AuthenticatedConsoleIndexRoute
   '/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
+  '/console/incidents/$incidentId': typeof AuthenticatedConsoleIncidentsIncidentIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -140,14 +194,20 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/console': typeof AuthenticatedConsoleRouteWithChildren
   '/_authenticated/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/_authenticated/console/audit': typeof AuthenticatedConsoleAuditRoute
+  '/_authenticated/console/copilot': typeof AuthenticatedConsoleCopilotRoute
   '/_authenticated/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/_authenticated/console/incidents': typeof AuthenticatedConsoleIncidentsRouteWithChildren
   '/_authenticated/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/_authenticated/console/knowledge': typeof AuthenticatedConsoleKnowledgeRoute
   '/_authenticated/console/predictions': typeof AuthenticatedConsolePredictionsRoute
   '/_authenticated/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/_authenticated/console/settings': typeof AuthenticatedConsoleSettingsRoute
   '/_authenticated/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
   '/_authenticated/console/topology': typeof AuthenticatedConsoleTopologyRoute
   '/_authenticated/console/': typeof AuthenticatedConsoleIndexRoute
   '/_authenticated/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
+  '/_authenticated/console/incidents/$incidentId': typeof AuthenticatedConsoleIncidentsIncidentIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -157,28 +217,40 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/console'
     | '/console/about'
+    | '/console/audit'
+    | '/console/copilot'
     | '/console/devices'
+    | '/console/incidents'
     | '/console/intelligence'
+    | '/console/knowledge'
     | '/console/predictions'
     | '/console/responsible-ai'
+    | '/console/settings'
     | '/console/sustainability'
     | '/console/topology'
     | '/console/'
     | '/console/devices/$deviceId'
+    | '/console/incidents/$incidentId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/reset-password'
     | '/console/about'
+    | '/console/audit'
+    | '/console/copilot'
     | '/console/devices'
+    | '/console/incidents'
     | '/console/intelligence'
+    | '/console/knowledge'
     | '/console/predictions'
     | '/console/responsible-ai'
+    | '/console/settings'
     | '/console/sustainability'
     | '/console/topology'
     | '/console'
     | '/console/devices/$deviceId'
+    | '/console/incidents/$incidentId'
   id:
     | '__root__'
     | '/'
@@ -187,14 +259,20 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/console'
     | '/_authenticated/console/about'
+    | '/_authenticated/console/audit'
+    | '/_authenticated/console/copilot'
     | '/_authenticated/console/devices'
+    | '/_authenticated/console/incidents'
     | '/_authenticated/console/intelligence'
+    | '/_authenticated/console/knowledge'
     | '/_authenticated/console/predictions'
     | '/_authenticated/console/responsible-ai'
+    | '/_authenticated/console/settings'
     | '/_authenticated/console/sustainability'
     | '/_authenticated/console/topology'
     | '/_authenticated/console/'
     | '/_authenticated/console/devices/$deviceId'
+    | '/_authenticated/console/incidents/$incidentId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -262,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleSustainabilityRouteImport
       parentRoute: typeof AuthenticatedConsoleRoute
     }
+    '/_authenticated/console/settings': {
+      id: '/_authenticated/console/settings'
+      path: '/settings'
+      fullPath: '/console/settings'
+      preLoaderRoute: typeof AuthenticatedConsoleSettingsRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
+    }
     '/_authenticated/console/responsible-ai': {
       id: '/_authenticated/console/responsible-ai'
       path: '/responsible-ai'
@@ -276,11 +361,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsolePredictionsRouteImport
       parentRoute: typeof AuthenticatedConsoleRoute
     }
+    '/_authenticated/console/knowledge': {
+      id: '/_authenticated/console/knowledge'
+      path: '/knowledge'
+      fullPath: '/console/knowledge'
+      preLoaderRoute: typeof AuthenticatedConsoleKnowledgeRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
+    }
     '/_authenticated/console/intelligence': {
       id: '/_authenticated/console/intelligence'
       path: '/intelligence'
       fullPath: '/console/intelligence'
       preLoaderRoute: typeof AuthenticatedConsoleIntelligenceRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
+    }
+    '/_authenticated/console/incidents': {
+      id: '/_authenticated/console/incidents'
+      path: '/incidents'
+      fullPath: '/console/incidents'
+      preLoaderRoute: typeof AuthenticatedConsoleIncidentsRouteImport
       parentRoute: typeof AuthenticatedConsoleRoute
     }
     '/_authenticated/console/devices': {
@@ -290,12 +389,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedConsoleDevicesRouteImport
       parentRoute: typeof AuthenticatedConsoleRoute
     }
+    '/_authenticated/console/copilot': {
+      id: '/_authenticated/console/copilot'
+      path: '/copilot'
+      fullPath: '/console/copilot'
+      preLoaderRoute: typeof AuthenticatedConsoleCopilotRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
+    }
+    '/_authenticated/console/audit': {
+      id: '/_authenticated/console/audit'
+      path: '/audit'
+      fullPath: '/console/audit'
+      preLoaderRoute: typeof AuthenticatedConsoleAuditRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
+    }
     '/_authenticated/console/about': {
       id: '/_authenticated/console/about'
       path: '/about'
       fullPath: '/console/about'
       preLoaderRoute: typeof AuthenticatedConsoleAboutRouteImport
       parentRoute: typeof AuthenticatedConsoleRoute
+    }
+    '/_authenticated/console/incidents/$incidentId': {
+      id: '/_authenticated/console/incidents/$incidentId'
+      path: '/$incidentId'
+      fullPath: '/console/incidents/$incidentId'
+      preLoaderRoute: typeof AuthenticatedConsoleIncidentsIncidentIdRouteImport
+      parentRoute: typeof AuthenticatedConsoleIncidentsRoute
     }
     '/_authenticated/console/devices/$deviceId': {
       id: '/_authenticated/console/devices/$deviceId'
@@ -322,12 +442,32 @@ const AuthenticatedConsoleDevicesRouteWithChildren =
     AuthenticatedConsoleDevicesRouteChildren,
   )
 
+interface AuthenticatedConsoleIncidentsRouteChildren {
+  AuthenticatedConsoleIncidentsIncidentIdRoute: typeof AuthenticatedConsoleIncidentsIncidentIdRoute
+}
+
+const AuthenticatedConsoleIncidentsRouteChildren: AuthenticatedConsoleIncidentsRouteChildren =
+  {
+    AuthenticatedConsoleIncidentsIncidentIdRoute:
+      AuthenticatedConsoleIncidentsIncidentIdRoute,
+  }
+
+const AuthenticatedConsoleIncidentsRouteWithChildren =
+  AuthenticatedConsoleIncidentsRoute._addFileChildren(
+    AuthenticatedConsoleIncidentsRouteChildren,
+  )
+
 interface AuthenticatedConsoleRouteChildren {
   AuthenticatedConsoleAboutRoute: typeof AuthenticatedConsoleAboutRoute
+  AuthenticatedConsoleAuditRoute: typeof AuthenticatedConsoleAuditRoute
+  AuthenticatedConsoleCopilotRoute: typeof AuthenticatedConsoleCopilotRoute
   AuthenticatedConsoleDevicesRoute: typeof AuthenticatedConsoleDevicesRouteWithChildren
+  AuthenticatedConsoleIncidentsRoute: typeof AuthenticatedConsoleIncidentsRouteWithChildren
   AuthenticatedConsoleIntelligenceRoute: typeof AuthenticatedConsoleIntelligenceRoute
+  AuthenticatedConsoleKnowledgeRoute: typeof AuthenticatedConsoleKnowledgeRoute
   AuthenticatedConsolePredictionsRoute: typeof AuthenticatedConsolePredictionsRoute
   AuthenticatedConsoleResponsibleAiRoute: typeof AuthenticatedConsoleResponsibleAiRoute
+  AuthenticatedConsoleSettingsRoute: typeof AuthenticatedConsoleSettingsRoute
   AuthenticatedConsoleSustainabilityRoute: typeof AuthenticatedConsoleSustainabilityRoute
   AuthenticatedConsoleTopologyRoute: typeof AuthenticatedConsoleTopologyRoute
   AuthenticatedConsoleIndexRoute: typeof AuthenticatedConsoleIndexRoute
@@ -335,12 +475,18 @@ interface AuthenticatedConsoleRouteChildren {
 
 const AuthenticatedConsoleRouteChildren: AuthenticatedConsoleRouteChildren = {
   AuthenticatedConsoleAboutRoute: AuthenticatedConsoleAboutRoute,
+  AuthenticatedConsoleAuditRoute: AuthenticatedConsoleAuditRoute,
+  AuthenticatedConsoleCopilotRoute: AuthenticatedConsoleCopilotRoute,
   AuthenticatedConsoleDevicesRoute:
     AuthenticatedConsoleDevicesRouteWithChildren,
+  AuthenticatedConsoleIncidentsRoute:
+    AuthenticatedConsoleIncidentsRouteWithChildren,
   AuthenticatedConsoleIntelligenceRoute: AuthenticatedConsoleIntelligenceRoute,
+  AuthenticatedConsoleKnowledgeRoute: AuthenticatedConsoleKnowledgeRoute,
   AuthenticatedConsolePredictionsRoute: AuthenticatedConsolePredictionsRoute,
   AuthenticatedConsoleResponsibleAiRoute:
     AuthenticatedConsoleResponsibleAiRoute,
+  AuthenticatedConsoleSettingsRoute: AuthenticatedConsoleSettingsRoute,
   AuthenticatedConsoleSustainabilityRoute:
     AuthenticatedConsoleSustainabilityRoute,
   AuthenticatedConsoleTopologyRoute: AuthenticatedConsoleTopologyRoute,
@@ -370,3 +516,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

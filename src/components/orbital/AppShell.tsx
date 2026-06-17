@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
   Activity, Boxes, BrainCircuit, ChevronLeft, Cpu, FileText, Gauge, Info,
-  Leaf, LogOut, Radio, Satellite, ShieldCheck, UserRound,
+  Leaf, LogOut, Radio, Satellite, ShieldCheck, UserRound, Settings, ListTree
 } from "lucide-react";
 import { useOrbital } from "@/lib/orbital/store";
 import { useAuth, roleLabel } from "@/lib/auth/AuthProvider";
@@ -11,17 +11,16 @@ const nav: { to: string; label: string; icon: typeof Gauge; exact?: boolean }[] 
   { to: "/console",                  label: "Mission Overview",        icon: Gauge, exact: true },
   { to: "/console/topology",         label: "Network Topology",        icon: Boxes },
   { to: "/console/devices",          label: "Devices",                 icon: Cpu },
+  { to: "/console/incidents",        label: "Active Incidents",        icon: Activity },
   { to: "/console/predictions",      label: "Predictions",             icon: Activity },
   { to: "/console/intelligence",     label: "Predictive Intelligence", icon: BrainCircuit },
+  { to: "/console/copilot",          label: "Orbital Copilot",         icon: Radio },
+  { to: "/console/knowledge",        label: "Knowledge Base",          icon: FileText },
+  { to: "/console/audit",            label: "Audit Logs",              icon: ListTree as typeof Gauge },
   { to: "/console/sustainability",   label: "Sustainability Impact",   icon: Leaf },
   { to: "/console/responsible-ai",   label: "Responsible AI",          icon: ShieldCheck },
+  { to: "/console/settings",         label: "Settings",                icon: Settings as typeof Gauge },
   { to: "/console/about",            label: "About",                   icon: Info },
-];
-
-const navStubLabels: { to: string; label: string; icon: typeof Gauge; soon?: boolean }[] = [
-  { to: "/console/copilot",       label: "Orbital Copilot",   icon: Radio,     soon: true },
-  { to: "/console/incidents",     label: "Active Incidents",  icon: Activity,  soon: true },
-  { to: "/console/knowledge",     label: "Knowledge Base",    icon: FileText,  soon: true },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
@@ -71,18 +70,6 @@ export function AppShell({ children }: { children: ReactNode }) {
                 <Icon className="h-4 w-4" />
                 {item.label}
               </Link>
-            );
-          })}
-          <div className="mt-4 px-3 pb-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
-            Next phase
-          </div>
-          {navStubLabels.map(item => {
-            const Icon = item.icon;
-            return (
-              <div key={item.to} className="flex items-center justify-between rounded-md px-3 py-2 text-sm text-muted-foreground/70" title="Available in upcoming phase">
-                <span className="flex items-center gap-2.5"><Icon className="h-4 w-4" />{item.label}</span>
-                <span className="font-mono text-[9px] uppercase tracking-wider">soon</span>
-              </div>
             );
           })}
         </nav>
