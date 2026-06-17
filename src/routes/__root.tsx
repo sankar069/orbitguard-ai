@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { OrbitalProvider } from "../lib/orbital/store";
+import { AuthProvider } from "../lib/auth/AuthProvider";
 
 function NotFoundComponent() {
   return (
@@ -118,9 +119,11 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <OrbitalProvider>
-        <Outlet />
-      </OrbitalProvider>
+      <AuthProvider>
+        <OrbitalProvider>
+          <Outlet />
+        </OrbitalProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
