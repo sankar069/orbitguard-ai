@@ -9,7 +9,7 @@ import { PageHeader, Section, SeverityBadge, StatCard } from "@/components/orbit
 import { FAULT_TYPES } from "@/lib/orbital/synthetic";
 import type { FaultType } from "@/lib/orbital/types";
 
-export const Route = createFileRoute("/console/devices/$deviceId")({
+export const Route = createFileRoute("/_authenticated/console/devices/$deviceId")({
   head: ({ params }) => ({ meta: [{ title: `${params.deviceId} · Device · OrbitalGuard` }] }),
   component: DeviceDetail,
   notFoundComponent: () => (
