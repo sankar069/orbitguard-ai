@@ -9,112 +9,121 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as ConsoleIndexRouteImport } from './routes/console.index'
-import { Route as ConsoleTopologyRouteImport } from './routes/console.topology'
-import { Route as ConsoleSustainabilityRouteImport } from './routes/console.sustainability'
-import { Route as ConsoleResponsibleAiRouteImport } from './routes/console.responsible-ai'
-import { Route as ConsolePredictionsRouteImport } from './routes/console.predictions'
-import { Route as ConsoleIntelligenceRouteImport } from './routes/console.intelligence'
-import { Route as ConsoleDevicesRouteImport } from './routes/console.devices'
-import { Route as ConsoleAboutRouteImport } from './routes/console.about'
-import { Route as ConsoleDevicesDeviceIdRouteImport } from './routes/console.devices.$deviceId'
+import { Route as AuthenticatedConsoleRouteImport } from './routes/_authenticated/console'
+import { Route as AuthenticatedConsoleIndexRouteImport } from './routes/_authenticated/console.index'
+import { Route as AuthenticatedConsoleTopologyRouteImport } from './routes/_authenticated/console.topology'
+import { Route as AuthenticatedConsoleSustainabilityRouteImport } from './routes/_authenticated/console.sustainability'
+import { Route as AuthenticatedConsoleResponsibleAiRouteImport } from './routes/_authenticated/console.responsible-ai'
+import { Route as AuthenticatedConsolePredictionsRouteImport } from './routes/_authenticated/console.predictions'
+import { Route as AuthenticatedConsoleIntelligenceRouteImport } from './routes/_authenticated/console.intelligence'
+import { Route as AuthenticatedConsoleDevicesRouteImport } from './routes/_authenticated/console.devices'
+import { Route as AuthenticatedConsoleAboutRouteImport } from './routes/_authenticated/console.about'
+import { Route as AuthenticatedConsoleDevicesDeviceIdRouteImport } from './routes/_authenticated/console.devices.$deviceId'
 
-const ConsoleRoute = ConsoleRouteImport.update({
-  id: '/console',
-  path: '/console',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ConsoleRoute,
+const AuthenticatedConsoleRoute = AuthenticatedConsoleRouteImport.update({
+  id: '/_authenticated/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ConsoleTopologyRoute = ConsoleTopologyRouteImport.update({
-  id: '/topology',
-  path: '/topology',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleSustainabilityRoute = ConsoleSustainabilityRouteImport.update({
-  id: '/sustainability',
-  path: '/sustainability',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleResponsibleAiRoute = ConsoleResponsibleAiRouteImport.update({
-  id: '/responsible-ai',
-  path: '/responsible-ai',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsolePredictionsRoute = ConsolePredictionsRouteImport.update({
-  id: '/predictions',
-  path: '/predictions',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleIntelligenceRoute = ConsoleIntelligenceRouteImport.update({
-  id: '/intelligence',
-  path: '/intelligence',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleDevicesRoute = ConsoleDevicesRouteImport.update({
-  id: '/devices',
-  path: '/devices',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleAboutRoute = ConsoleAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleDevicesDeviceIdRoute = ConsoleDevicesDeviceIdRouteImport.update({
-  id: '/$deviceId',
-  path: '/$deviceId',
-  getParentRoute: () => ConsoleDevicesRoute,
-} as any)
+const AuthenticatedConsoleIndexRoute =
+  AuthenticatedConsoleIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleTopologyRoute =
+  AuthenticatedConsoleTopologyRouteImport.update({
+    id: '/topology',
+    path: '/topology',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleSustainabilityRoute =
+  AuthenticatedConsoleSustainabilityRouteImport.update({
+    id: '/sustainability',
+    path: '/sustainability',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleResponsibleAiRoute =
+  AuthenticatedConsoleResponsibleAiRouteImport.update({
+    id: '/responsible-ai',
+    path: '/responsible-ai',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsolePredictionsRoute =
+  AuthenticatedConsolePredictionsRouteImport.update({
+    id: '/predictions',
+    path: '/predictions',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleIntelligenceRoute =
+  AuthenticatedConsoleIntelligenceRouteImport.update({
+    id: '/intelligence',
+    path: '/intelligence',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleDevicesRoute =
+  AuthenticatedConsoleDevicesRouteImport.update({
+    id: '/devices',
+    path: '/devices',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleAboutRoute =
+  AuthenticatedConsoleAboutRouteImport.update({
+    id: '/about',
+    path: '/about',
+    getParentRoute: () => AuthenticatedConsoleRoute,
+  } as any)
+const AuthenticatedConsoleDevicesDeviceIdRoute =
+  AuthenticatedConsoleDevicesDeviceIdRouteImport.update({
+    id: '/$deviceId',
+    path: '/$deviceId',
+    getParentRoute: () => AuthenticatedConsoleDevicesRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/console': typeof ConsoleRouteWithChildren
-  '/console/about': typeof ConsoleAboutRoute
-  '/console/devices': typeof ConsoleDevicesRouteWithChildren
-  '/console/intelligence': typeof ConsoleIntelligenceRoute
-  '/console/predictions': typeof ConsolePredictionsRoute
-  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
-  '/console/sustainability': typeof ConsoleSustainabilityRoute
-  '/console/topology': typeof ConsoleTopologyRoute
-  '/console/': typeof ConsoleIndexRoute
-  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
+  '/console': typeof AuthenticatedConsoleRouteWithChildren
+  '/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/console/predictions': typeof AuthenticatedConsolePredictionsRoute
+  '/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
+  '/console/topology': typeof AuthenticatedConsoleTopologyRoute
+  '/console/': typeof AuthenticatedConsoleIndexRoute
+  '/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/console/about': typeof ConsoleAboutRoute
-  '/console/devices': typeof ConsoleDevicesRouteWithChildren
-  '/console/intelligence': typeof ConsoleIntelligenceRoute
-  '/console/predictions': typeof ConsolePredictionsRoute
-  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
-  '/console/sustainability': typeof ConsoleSustainabilityRoute
-  '/console/topology': typeof ConsoleTopologyRoute
-  '/console': typeof ConsoleIndexRoute
-  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
+  '/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/console/predictions': typeof AuthenticatedConsolePredictionsRoute
+  '/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
+  '/console/topology': typeof AuthenticatedConsoleTopologyRoute
+  '/console': typeof AuthenticatedConsoleIndexRoute
+  '/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/console': typeof ConsoleRouteWithChildren
-  '/console/about': typeof ConsoleAboutRoute
-  '/console/devices': typeof ConsoleDevicesRouteWithChildren
-  '/console/intelligence': typeof ConsoleIntelligenceRoute
-  '/console/predictions': typeof ConsolePredictionsRoute
-  '/console/responsible-ai': typeof ConsoleResponsibleAiRoute
-  '/console/sustainability': typeof ConsoleSustainabilityRoute
-  '/console/topology': typeof ConsoleTopologyRoute
-  '/console/': typeof ConsoleIndexRoute
-  '/console/devices/$deviceId': typeof ConsoleDevicesDeviceIdRoute
+  '/_authenticated/console': typeof AuthenticatedConsoleRouteWithChildren
+  '/_authenticated/console/about': typeof AuthenticatedConsoleAboutRoute
+  '/_authenticated/console/devices': typeof AuthenticatedConsoleDevicesRouteWithChildren
+  '/_authenticated/console/intelligence': typeof AuthenticatedConsoleIntelligenceRoute
+  '/_authenticated/console/predictions': typeof AuthenticatedConsolePredictionsRoute
+  '/_authenticated/console/responsible-ai': typeof AuthenticatedConsoleResponsibleAiRoute
+  '/_authenticated/console/sustainability': typeof AuthenticatedConsoleSustainabilityRoute
+  '/_authenticated/console/topology': typeof AuthenticatedConsoleTopologyRoute
+  '/_authenticated/console/': typeof AuthenticatedConsoleIndexRoute
+  '/_authenticated/console/devices/$deviceId': typeof AuthenticatedConsoleDevicesDeviceIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -145,32 +154,25 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/console'
-    | '/console/about'
-    | '/console/devices'
-    | '/console/intelligence'
-    | '/console/predictions'
-    | '/console/responsible-ai'
-    | '/console/sustainability'
-    | '/console/topology'
-    | '/console/'
-    | '/console/devices/$deviceId'
+    | '/_authenticated/console'
+    | '/_authenticated/console/about'
+    | '/_authenticated/console/devices'
+    | '/_authenticated/console/intelligence'
+    | '/_authenticated/console/predictions'
+    | '/_authenticated/console/responsible-ai'
+    | '/_authenticated/console/sustainability'
+    | '/_authenticated/console/topology'
+    | '/_authenticated/console/'
+    | '/_authenticated/console/devices/$deviceId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ConsoleRoute: typeof ConsoleRouteWithChildren
+  AuthenticatedConsoleRoute: typeof AuthenticatedConsoleRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/console': {
-      id: '/console'
-      path: '/console'
-      fullPath: '/console'
-      preLoaderRoute: typeof ConsoleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -178,112 +180,125 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/console/': {
-      id: '/console/'
+    '/_authenticated/console': {
+      id: '/_authenticated/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof AuthenticatedConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/console/': {
+      id: '/_authenticated/console/'
       path: '/'
       fullPath: '/console/'
-      preLoaderRoute: typeof ConsoleIndexRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleIndexRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/topology': {
-      id: '/console/topology'
+    '/_authenticated/console/topology': {
+      id: '/_authenticated/console/topology'
       path: '/topology'
       fullPath: '/console/topology'
-      preLoaderRoute: typeof ConsoleTopologyRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleTopologyRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/sustainability': {
-      id: '/console/sustainability'
+    '/_authenticated/console/sustainability': {
+      id: '/_authenticated/console/sustainability'
       path: '/sustainability'
       fullPath: '/console/sustainability'
-      preLoaderRoute: typeof ConsoleSustainabilityRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleSustainabilityRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/responsible-ai': {
-      id: '/console/responsible-ai'
+    '/_authenticated/console/responsible-ai': {
+      id: '/_authenticated/console/responsible-ai'
       path: '/responsible-ai'
       fullPath: '/console/responsible-ai'
-      preLoaderRoute: typeof ConsoleResponsibleAiRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleResponsibleAiRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/predictions': {
-      id: '/console/predictions'
+    '/_authenticated/console/predictions': {
+      id: '/_authenticated/console/predictions'
       path: '/predictions'
       fullPath: '/console/predictions'
-      preLoaderRoute: typeof ConsolePredictionsRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsolePredictionsRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/intelligence': {
-      id: '/console/intelligence'
+    '/_authenticated/console/intelligence': {
+      id: '/_authenticated/console/intelligence'
       path: '/intelligence'
       fullPath: '/console/intelligence'
-      preLoaderRoute: typeof ConsoleIntelligenceRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleIntelligenceRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/devices': {
-      id: '/console/devices'
+    '/_authenticated/console/devices': {
+      id: '/_authenticated/console/devices'
       path: '/devices'
       fullPath: '/console/devices'
-      preLoaderRoute: typeof ConsoleDevicesRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleDevicesRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/about': {
-      id: '/console/about'
+    '/_authenticated/console/about': {
+      id: '/_authenticated/console/about'
       path: '/about'
       fullPath: '/console/about'
-      preLoaderRoute: typeof ConsoleAboutRouteImport
-      parentRoute: typeof ConsoleRoute
+      preLoaderRoute: typeof AuthenticatedConsoleAboutRouteImport
+      parentRoute: typeof AuthenticatedConsoleRoute
     }
-    '/console/devices/$deviceId': {
-      id: '/console/devices/$deviceId'
+    '/_authenticated/console/devices/$deviceId': {
+      id: '/_authenticated/console/devices/$deviceId'
       path: '/$deviceId'
       fullPath: '/console/devices/$deviceId'
-      preLoaderRoute: typeof ConsoleDevicesDeviceIdRouteImport
-      parentRoute: typeof ConsoleDevicesRoute
+      preLoaderRoute: typeof AuthenticatedConsoleDevicesDeviceIdRouteImport
+      parentRoute: typeof AuthenticatedConsoleDevicesRoute
     }
   }
 }
 
-interface ConsoleDevicesRouteChildren {
-  ConsoleDevicesDeviceIdRoute: typeof ConsoleDevicesDeviceIdRoute
+interface AuthenticatedConsoleDevicesRouteChildren {
+  AuthenticatedConsoleDevicesDeviceIdRoute: typeof AuthenticatedConsoleDevicesDeviceIdRoute
 }
 
-const ConsoleDevicesRouteChildren: ConsoleDevicesRouteChildren = {
-  ConsoleDevicesDeviceIdRoute: ConsoleDevicesDeviceIdRoute,
+const AuthenticatedConsoleDevicesRouteChildren: AuthenticatedConsoleDevicesRouteChildren =
+  {
+    AuthenticatedConsoleDevicesDeviceIdRoute:
+      AuthenticatedConsoleDevicesDeviceIdRoute,
+  }
+
+const AuthenticatedConsoleDevicesRouteWithChildren =
+  AuthenticatedConsoleDevicesRoute._addFileChildren(
+    AuthenticatedConsoleDevicesRouteChildren,
+  )
+
+interface AuthenticatedConsoleRouteChildren {
+  AuthenticatedConsoleAboutRoute: typeof AuthenticatedConsoleAboutRoute
+  AuthenticatedConsoleDevicesRoute: typeof AuthenticatedConsoleDevicesRouteWithChildren
+  AuthenticatedConsoleIntelligenceRoute: typeof AuthenticatedConsoleIntelligenceRoute
+  AuthenticatedConsolePredictionsRoute: typeof AuthenticatedConsolePredictionsRoute
+  AuthenticatedConsoleResponsibleAiRoute: typeof AuthenticatedConsoleResponsibleAiRoute
+  AuthenticatedConsoleSustainabilityRoute: typeof AuthenticatedConsoleSustainabilityRoute
+  AuthenticatedConsoleTopologyRoute: typeof AuthenticatedConsoleTopologyRoute
+  AuthenticatedConsoleIndexRoute: typeof AuthenticatedConsoleIndexRoute
 }
 
-const ConsoleDevicesRouteWithChildren = ConsoleDevicesRoute._addFileChildren(
-  ConsoleDevicesRouteChildren,
-)
-
-interface ConsoleRouteChildren {
-  ConsoleAboutRoute: typeof ConsoleAboutRoute
-  ConsoleDevicesRoute: typeof ConsoleDevicesRouteWithChildren
-  ConsoleIntelligenceRoute: typeof ConsoleIntelligenceRoute
-  ConsolePredictionsRoute: typeof ConsolePredictionsRoute
-  ConsoleResponsibleAiRoute: typeof ConsoleResponsibleAiRoute
-  ConsoleSustainabilityRoute: typeof ConsoleSustainabilityRoute
-  ConsoleTopologyRoute: typeof ConsoleTopologyRoute
-  ConsoleIndexRoute: typeof ConsoleIndexRoute
+const AuthenticatedConsoleRouteChildren: AuthenticatedConsoleRouteChildren = {
+  AuthenticatedConsoleAboutRoute: AuthenticatedConsoleAboutRoute,
+  AuthenticatedConsoleDevicesRoute:
+    AuthenticatedConsoleDevicesRouteWithChildren,
+  AuthenticatedConsoleIntelligenceRoute: AuthenticatedConsoleIntelligenceRoute,
+  AuthenticatedConsolePredictionsRoute: AuthenticatedConsolePredictionsRoute,
+  AuthenticatedConsoleResponsibleAiRoute:
+    AuthenticatedConsoleResponsibleAiRoute,
+  AuthenticatedConsoleSustainabilityRoute:
+    AuthenticatedConsoleSustainabilityRoute,
+  AuthenticatedConsoleTopologyRoute: AuthenticatedConsoleTopologyRoute,
+  AuthenticatedConsoleIndexRoute: AuthenticatedConsoleIndexRoute,
 }
 
-const ConsoleRouteChildren: ConsoleRouteChildren = {
-  ConsoleAboutRoute: ConsoleAboutRoute,
-  ConsoleDevicesRoute: ConsoleDevicesRouteWithChildren,
-  ConsoleIntelligenceRoute: ConsoleIntelligenceRoute,
-  ConsolePredictionsRoute: ConsolePredictionsRoute,
-  ConsoleResponsibleAiRoute: ConsoleResponsibleAiRoute,
-  ConsoleSustainabilityRoute: ConsoleSustainabilityRoute,
-  ConsoleTopologyRoute: ConsoleTopologyRoute,
-  ConsoleIndexRoute: ConsoleIndexRoute,
-}
-
-const ConsoleRouteWithChildren =
-  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+const AuthenticatedConsoleRouteWithChildren =
+  AuthenticatedConsoleRoute._addFileChildren(AuthenticatedConsoleRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ConsoleRoute: ConsoleRouteWithChildren,
+  AuthenticatedConsoleRoute: AuthenticatedConsoleRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

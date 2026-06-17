@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { useOrbital } from "@/lib/orbital/store";
 import { PageHeader, Section, StatCard } from "@/components/orbital/ui";
 
-export const Route = createFileRoute("/console/sustainability")({
+export const Route = createFileRoute("/_authenticated/console/sustainability")({
   head: () => ({ meta: [{ title: "Sustainability Impact · OrbitalGuard" }] }),
   component: SustainabilityPage,
 });

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useOrbital } from "@/lib/orbital/store";
 import { PageHeader, Section, SeverityBadge } from "@/components/orbital/ui";
 
-export const Route = createFileRoute("/console/predictions")({
+export const Route = createFileRoute("/_authenticated/console/predictions")({
   head: () => ({ meta: [{ title: "Predictions · OrbitalGuard" }] }),
   component: PredictionsPage,
 });
