@@ -4,7 +4,7 @@ import { useOrbital } from "@/lib/orbital/store";
 import { DEFAULT_WEIGHTS, ENGINE_VERSION } from "@/lib/orbital/scoring";
 import { PageHeader, Section, StatCard } from "@/components/orbital/ui";
 
-export const Route = createFileRoute("/console/intelligence")({
+export const Route = createFileRoute("/_authenticated/console/intelligence")({
   head: () => ({ meta: [{ title: "Predictive Intelligence · OrbitalGuard" }] }),
   component: Intelligence,
 });

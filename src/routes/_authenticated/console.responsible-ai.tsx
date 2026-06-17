@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader, Section } from "@/components/orbital/ui";
 
-export const Route = createFileRoute("/console/responsible-ai")({
+export const Route = createFileRoute("/_authenticated/console/responsible-ai")({
   head: () => ({ meta: [{ title: "Responsible AI · OrbitalGuard" }] }),
   component: ResponsibleAIPage,
 });

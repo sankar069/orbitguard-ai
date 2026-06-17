@@ -6,7 +6,7 @@ import { SimulationControls } from "@/components/orbital/SimulationControls";
 import { sites } from "@/lib/orbital/synthetic";
 import { severityColor, severityLabel } from "@/lib/orbital/scoring";
 
-export const Route = createFileRoute("/console/topology")({
+export const Route = createFileRoute("/_authenticated/console/topology")({
   head: () => ({ meta: [{ title: "Network Topology · OrbitalGuard" }] }),
   component: TopologyPage,
 });

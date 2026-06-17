@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader, Section } from "@/components/orbital/ui";
 
-export const Route = createFileRoute("/console/about")({
+export const Route = createFileRoute("/_authenticated/console/about")({
   head: () => ({ meta: [{ title: "About · OrbitalGuard" }] }),
   component: AboutPage,
 });

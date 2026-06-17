@@ -10,7 +10,7 @@ import { PageHeader, Section, SeverityBadge, StatCard } from "@/components/orbit
 import { SimulationControls } from "@/components/orbital/SimulationControls";
 import { sites } from "@/lib/orbital/synthetic";
 
-export const Route = createFileRoute("/console/")({
+export const Route = createFileRoute("/_authenticated/console/")({
   head: () => ({
     meta: [
       { title: "Mission Overview · OrbitalGuard" },

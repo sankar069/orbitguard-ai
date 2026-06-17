@@ -5,7 +5,7 @@ import { useOrbital } from "@/lib/orbital/store";
 import { PageHeader, SeverityBadge } from "@/components/orbital/ui";
 import { sites } from "@/lib/orbital/synthetic";
 
-export const Route = createFileRoute("/console/devices")({
+export const Route = createFileRoute("/_authenticated/console/devices")({
   head: () => ({ meta: [{ title: "Devices · OrbitalGuard" }] }),
   component: DevicesList,
 });
