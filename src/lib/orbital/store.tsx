@@ -1,10 +1,24 @@
 // React context owning the synthetic simulation state.
 // Single source of truth for devices, telemetry, faults, simulation control.
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  appendTick, bootstrap, clearAllFaults, clearFault, injectFault,
-  TICK_MS, type SyntheticState,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import {
+  appendTick,
+  bootstrap,
+  clearAllFaults,
+  clearFault,
+  injectFault,
+  TICK_MS,
+  type SyntheticState,
 } from "./synthetic";
 import type { FaultType, ScoreResult } from "./types";
 import { DEFAULT_WEIGHTS, scoreDevice, type ScoreWeights } from "./scoring";
@@ -37,7 +51,7 @@ export function OrbitalProvider({ children }: { children: ReactNode }) {
   const timerRef = useRef<number | null>(null);
 
   const tick = useCallback(() => {
-    setState(prev => appendTick(prev, speed));
+    setState((prev) => appendTick(prev, speed));
   }, [speed]);
 
   useEffect(() => {
@@ -60,14 +74,19 @@ export function OrbitalProvider({ children }: { children: ReactNode }) {
   }, [state, weights]);
 
   const value: OrbitalContextValue = {
-    state, scores, weights, setWeights,
-    running, speed, setSpeed,
+    state,
+    scores,
+    weights,
+    setWeights,
+    running,
+    speed,
+    setSpeed,
     start: () => setRunning(true),
     pause: () => setRunning(false),
     reset: () => setState(bootstrap(state.rngSeed)),
-    inject: (id, t) => setState(s => injectFault(s, id, t)),
-    clear: (id) => setState(s => clearFault(s, id)),
-    clearAll: () => setState(s => clearAllFaults(s)),
+    inject: (id, t) => setState((s) => injectFault(s, id, t)),
+    clear: (id) => setState((s) => clearFault(s, id)),
+    clearAll: () => setState((s) => clearAllFaults(s)),
   };
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;

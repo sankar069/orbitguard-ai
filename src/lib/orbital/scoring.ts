@@ -4,7 +4,12 @@
 // components. No random outputs; reproducible from the same input.
 
 import type {
-  Device, FaultType, RiskComponent, ScoreResult, Severity, TelemetryPoint,
+  Device,
+  FaultType,
+  RiskComponent,
+  ScoreResult,
+  Severity,
+  TelemetryPoint,
 } from "./types";
 
 export const ENGINE_VERSION = "stat-rules-0.1.0";
@@ -64,18 +69,18 @@ export interface ScoreWeights {
 }
 
 export const DEFAULT_WEIGHTS: ScoreWeights = {
-  latency:     0.12,
-  jitter:      0.05,
-  loss:        0.13,
-  cpu:         0.11,
-  memory:      0.08,
-  temperature: 0.10,
-  errors:      0.10,
-  optical:     0.10,
-  linkFlaps:   0.06,
-  security:    0.07,
-  power:       0.05,
-  config:      0.03,
+  latency: 0.12,
+  jitter: 0.05,
+  loss: 0.13,
+  cpu: 0.11,
+  memory: 0.08,
+  temperature: 0.1,
+  errors: 0.1,
+  optical: 0.1,
+  linkFlaps: 0.06,
+  security: 0.07,
+  power: 0.05,
+  config: 0.03,
 };
 
 /* ---------------- main scorer ---------------- */
@@ -107,25 +112,26 @@ export function scoreDevice(
   const recent5 = history.slice(-5);
   const avg = (sel: (p: TelemetryPoint) => number) => mean(recent5.map(sel));
 
-  const latencyAvg = avg(p => p.latencyMs);
-  const jitterAvg  = avg(p => p.jitterMs);
-  const lossAvg    = avg(p => p.packetLossPct);
-  const cpuAvg     = avg(p => p.cpuPct);
-  const memAvg     = avg(p => p.memoryPct);
-  const tempAvg    = avg(p => p.temperatureC);
-  const utilAvg    = avg(p => p.bandwidthUtilPct);
-  const errSum     = recent5.reduce((s, p) => s + p.inputErrors + p.outputErrors + p.crcErrors, 0);
-  const opticalAvg = avg(p => p.opticalRxDbm);
-  const flapsSum   = history.slice(-15).reduce((s, p) => s + p.linkFlaps15m, 0);
+  const latencyAvg = avg((p) => p.latencyMs);
+  const jitterAvg = avg((p) => p.jitterMs);
+  const lossAvg = avg((p) => p.packetLossPct);
+  const cpuAvg = avg((p) => p.cpuPct);
+  const memAvg = avg((p) => p.memoryPct);
+  const tempAvg = avg((p) => p.temperatureC);
+  const utilAvg = avg((p) => p.bandwidthUtilPct);
+  const errSum = recent5.reduce((s, p) => s + p.inputErrors + p.outputErrors + p.crcErrors, 0);
+  const opticalAvg = avg((p) => p.opticalRxDbm);
+  const flapsSum = history.slice(-15).reduce((s, p) => s + p.linkFlaps15m, 0);
   const failedLoginSum = history.slice(-10).reduce((s, p) => s + p.failedLogins, 0);
-  const configChanges  = history.slice(-15).reduce((s, p) => s + p.configChanged, 0);
+  const configChanges = history.slice(-15).reduce((s, p) => s + p.configChanged, 0);
 
   // Component risks
   const components: RiskComponent[] = [];
 
-  const zLat = zOf(p => p.latencyMs);
+  const zLat = zOf((p) => p.latencyMs);
   components.push({
-    key: "latency", label: "Latency",
+    key: "latency",
+    label: "Latency",
     value: round(latencyAvg, 2),
     risk: clamp(Math.max(band(latencyAvg, 10, 25, 60), absZRisk(zLat.z)), 0, 100),
     weight: weights.latency,
@@ -133,25 +139,28 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "jitter", label: "Jitter",
+    key: "jitter",
+    label: "Jitter",
     value: round(jitterAvg, 2),
     risk: band(jitterAvg, 1, 4, 10),
     weight: weights.jitter,
     reason: `avg ${jitterAvg.toFixed(2)}ms`,
   });
 
-  const zLoss = zOf(p => p.packetLossPct);
+  const zLoss = zOf((p) => p.packetLossPct);
   components.push({
-    key: "loss", label: "Packet loss",
+    key: "loss",
+    label: "Packet loss",
     value: round(lossAvg, 3),
     risk: clamp(Math.max(band(lossAvg, 0.2, 1.0, 3.0), absZRisk(zLoss.z)), 0, 100),
     weight: weights.loss,
     reason: `${lossAvg.toFixed(2)}% (z=${zLoss.z.toFixed(2)})`,
   });
 
-  const zCpu = zOf(p => p.cpuPct);
+  const zCpu = zOf((p) => p.cpuPct);
   components.push({
-    key: "cpu", label: "CPU",
+    key: "cpu",
+    label: "CPU",
     value: round(cpuAvg, 1),
     risk: clamp(Math.max(band(cpuAvg, 55, 75, 92), absZRisk(zCpu.z)), 0, 100),
     weight: weights.cpu,
@@ -159,16 +168,18 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "memory", label: "Memory",
+    key: "memory",
+    label: "Memory",
     value: round(memAvg, 1),
     risk: band(memAvg, 70, 85, 95),
     weight: weights.memory,
     reason: `${memAvg.toFixed(1)}%`,
   });
 
-  const zTemp = zOf(p => p.temperatureC);
+  const zTemp = zOf((p) => p.temperatureC);
   components.push({
-    key: "temperature", label: "Temperature",
+    key: "temperature",
+    label: "Temperature",
     value: round(tempAvg, 1),
     risk: clamp(Math.max(band(tempAvg, 45, 60, 75), absZRisk(zTemp.z)), 0, 100),
     weight: weights.temperature,
@@ -176,7 +187,8 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "errors", label: "Interface errors",
+    key: "errors",
+    label: "Interface errors",
     value: errSum,
     risk: band(errSum, 5, 40, 150),
     weight: weights.errors,
@@ -184,7 +196,8 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "optical", label: "Optical Rx",
+    key: "optical",
+    label: "Optical Rx",
     value: round(opticalAvg, 2),
     risk: reverseBand(opticalAvg, -12, -16, -20),
     weight: weights.optical,
@@ -192,7 +205,8 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "linkFlaps", label: "Link flaps",
+    key: "linkFlaps",
+    label: "Link flaps",
     value: flapsSum,
     risk: band(flapsSum, 0, 2, 6),
     weight: weights.linkFlaps,
@@ -200,7 +214,8 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "security", label: "Auth security",
+    key: "security",
+    label: "Auth security",
     value: failedLoginSum,
     risk: band(failedLoginSum, 0, 3, 10),
     weight: weights.security,
@@ -208,15 +223,22 @@ export function scoreDevice(
   });
 
   components.push({
-    key: "power", label: "Power & cooling",
+    key: "power",
+    label: "Power & cooling",
     value: now.powerOk * 10 + now.fanOk,
     risk: (now.powerOk === 0 ? 80 : 0) + (now.fanOk === 0 ? 40 : 0),
     weight: weights.power,
-    reason: now.powerOk === 0 ? "Power fault reported" : now.fanOk === 0 ? "Fan fault reported" : "Nominal",
+    reason:
+      now.powerOk === 0
+        ? "Power fault reported"
+        : now.fanOk === 0
+          ? "Fan fault reported"
+          : "Nominal",
   });
 
   components.push({
-    key: "config", label: "Config integrity",
+    key: "config",
+    label: "Config integrity",
     value: configChanges,
     risk: band(configChanges, 0, 1, 3),
     weight: weights.config,
@@ -229,40 +251,53 @@ export function scoreDevice(
   const healthScore = clamp(100 - weightedRisk, 0, 100);
 
   // Anomaly score: max abs z-score across key features, scaled
-  const zMax = Math.max(
-    Math.abs(zLat.z), Math.abs(zLoss.z), Math.abs(zCpu.z), Math.abs(zTemp.z),
-  );
+  const zMax = Math.max(Math.abs(zLat.z), Math.abs(zLoss.z), Math.abs(zCpu.z), Math.abs(zTemp.z));
   const anomalyScore = clamp(zMax * 25, 0, 100);
 
   // Failure risk: blend of weighted risk + anomaly + trend
-  const trendSlope = simpleSlope(window.map(p => p.latencyMs + p.cpuPct + p.packetLossPct * 20));
+  const trendSlope = simpleSlope(window.map((p) => p.latencyMs + p.cpuPct + p.packetLossPct * 20));
   const trendBoost = clamp(trendSlope * 6, 0, 30);
   const failureRisk = clamp(weightedRisk * 0.55 + anomalyScore * 0.3 + trendBoost, 0, 100);
 
   // Data quality
-  const dataQuality = clamp(1 - (validBaseline.length < 60 ? 0.3 : 0) - (recent5.length < 5 ? 0.2 : 0), 0.4, 1);
+  const dataQuality = clamp(
+    1 - (validBaseline.length < 60 ? 0.3 : 0) - (recent5.length < 5 ? 0.2 : 0),
+    0.4,
+    1,
+  );
 
   // Confidence: more abnormal components + better data → higher confidence.
-  const abnormalCount = components.filter(c => c.risk >= 40).length;
-  const confidence = clamp(0.35 + abnormalCount * 0.1 + dataQuality * 0.25 + (zMax > 3 ? 0.15 : 0), 0.2, 0.95);
+  const abnormalCount = components.filter((c) => c.risk >= 40).length;
+  const confidence = clamp(
+    0.35 + abnormalCount * 0.1 + dataQuality * 0.25 + (zMax > 3 ? 0.15 : 0),
+    0.2,
+    0.95,
+  );
 
   // Severity
   const severity = severityFromScore(healthScore, failureRisk);
 
   // Root-cause ranking
   const rootCauseCandidates = rankRootCauses(components, {
-    opticalAvg, latencyAvg, lossAvg, utilAvg, cpuAvg, tempAvg, flapsSum,
-    failedLoginSum, configChanges, errSum,
+    opticalAvg,
+    latencyAvg,
+    lossAvg,
+    utilAvg,
+    cpuAvg,
+    tempAvg,
+    flapsSum,
+    failedLoginSum,
+    configChanges,
+    errSum,
   });
 
-  const predictedFailureType = rootCauseCandidates[0]?.cause === "stable"
-    ? "none"
-    : (rootCauseCandidates[0]?.cause as FaultType);
+  const predictedFailureType =
+    rootCauseCandidates[0]?.cause === "stable"
+      ? "none"
+      : (rootCauseCandidates[0]?.cause as FaultType);
 
   const predictionHorizonMinutes =
-    failureRisk > 85 ? 15 :
-    failureRisk > 70 ? 30 :
-    failureRisk > 45 ? 60 : 120;
+    failureRisk > 85 ? 15 : failureRisk > 70 ? 30 : failureRisk > 45 ? 60 : 120;
 
   const recommendedActions = recommendActions(predictedFailureType, severity, device);
 
@@ -287,10 +322,15 @@ export function scoreDevice(
 
 function offlineResult(device: Device, t: number): ScoreResult {
   return {
-    deviceId: device.id, timestamp: t,
-    healthScore: 0, anomalyScore: 100, failureRisk: 100,
+    deviceId: device.id,
+    timestamp: t,
+    healthScore: 0,
+    anomalyScore: 100,
+    failureRisk: 100,
     predictedFailureType: "interface-failure",
-    predictionHorizonMinutes: 0, confidence: 0.6, dataQuality: 0.5,
+    predictionHorizonMinutes: 0,
+    confidence: 0.6,
+    dataQuality: 0.5,
     severity: "offline",
     contributingFactors: [],
     rootCauseCandidates: [
@@ -300,7 +340,8 @@ function offlineResult(device: Device, t: number): ScoreResult {
       "Verify device power and console access via out-of-band management.",
       "Inspect upstream link status and recent configuration changes.",
     ],
-    engineType: "statistical-rules", engineVersion: ENGINE_VERSION,
+    engineType: "statistical-rules",
+    engineVersion: ENGINE_VERSION,
   };
 }
 
@@ -317,7 +358,8 @@ function simpleSlope(xs: number[]): number {
   if (n < 4) return 0;
   const xMean = (n - 1) / 2;
   const yMean = mean(xs);
-  let num = 0, den = 0;
+  let num = 0,
+    den = 0;
   for (let i = 0; i < n; i++) {
     num += (i - xMean) * (xs[i] - yMean);
     den += (i - xMean) ** 2;
@@ -334,18 +376,28 @@ export function severityFromScore(health: number, failureRisk: number): Severity
 }
 
 interface RankInputs {
-  opticalAvg: number; latencyAvg: number; lossAvg: number; utilAvg: number;
-  cpuAvg: number; tempAvg: number; flapsSum: number;
-  failedLoginSum: number; configChanges: number; errSum: number;
+  opticalAvg: number;
+  latencyAvg: number;
+  lossAvg: number;
+  utilAvg: number;
+  cpuAvg: number;
+  tempAvg: number;
+  flapsSum: number;
+  failedLoginSum: number;
+  configChanges: number;
+  errSum: number;
 }
 
-function rankRootCauses(components: RiskComponent[], v: RankInputs): ScoreResult["rootCauseCandidates"] {
-  const r = (k: string) => components.find(c => c.key === k)?.risk ?? 0;
+function rankRootCauses(
+  components: RiskComponent[],
+  v: RankInputs,
+): ScoreResult["rootCauseCandidates"] {
+  const r = (k: string) => components.find((c) => c.key === k)?.risk ?? 0;
   const scores: { cause: FaultType | "stable"; raw: number; evidence: string[] }[] = [];
 
   scores.push({
     cause: "optical-degradation",
-    raw: r("optical") * 0.6 + r("errors") * 0.25 + (v.flapsSum * 5) + r("loss") * 0.15,
+    raw: r("optical") * 0.6 + r("errors") * 0.25 + v.flapsSum * 5 + r("loss") * 0.15,
     evidence: [
       `Optical Rx ${v.opticalAvg.toFixed(2)} dBm`,
       `${v.errSum} interface/CRC errors in 5 min`,
@@ -360,12 +412,18 @@ function rankRootCauses(components: RiskComponent[], v: RankInputs): ScoreResult
   scores.push({
     cause: "suspicious-config",
     raw: r("security") * 0.55 + r("config") * 0.45 + (v.utilAvg > 70 ? 10 : 0),
-    evidence: [`${v.failedLoginSum} failed logins`, `${v.configChanges} unscheduled config change(s)`],
+    evidence: [
+      `${v.failedLoginSum} failed logins`,
+      `${v.configChanges} unscheduled config change(s)`,
+    ],
   });
   scores.push({
     cause: "link-congestion",
     raw: (v.utilAvg > 75 ? (v.utilAvg - 75) * 4 : 0) + r("latency") * 0.4 + r("loss") * 0.3,
-    evidence: [`Bandwidth util ${v.utilAvg.toFixed(0)}%`, `Latency avg ${v.latencyAvg.toFixed(1)}ms`],
+    evidence: [
+      `Bandwidth util ${v.utilAvg.toFixed(0)}%`,
+      `Latency avg ${v.latencyAvg.toFixed(1)}ms`,
+    ],
   });
   scores.push({
     cause: "cpu-overload",
@@ -375,13 +433,23 @@ function rankRootCauses(components: RiskComponent[], v: RankInputs): ScoreResult
 
   const totalSignal = scores.reduce((s, x) => s + Math.max(0, x.raw), 0);
   if (totalSignal < 8) {
-    return [{ cause: "stable", probability: 95, evidence: ["No correlated risk signals above threshold."] }];
+    return [
+      {
+        cause: "stable",
+        probability: 95,
+        evidence: ["No correlated risk signals above threshold."],
+      },
+    ];
   }
   const ranked = scores
-    .map(s => ({ cause: s.cause, probability: clamp((s.raw / totalSignal) * 100, 0, 99), evidence: s.evidence }))
+    .map((s) => ({
+      cause: s.cause,
+      probability: clamp((s.raw / totalSignal) * 100, 0, 99),
+      evidence: s.evidence,
+    }))
     .sort((a, b) => b.probability - a.probability)
     .slice(0, 4)
-    .map(s => ({ ...s, probability: round(s.probability, 0) }));
+    .map((s) => ({ ...s, probability: round(s.probability, 0) }));
   return ranked;
 }
 
@@ -425,17 +493,23 @@ function recommendActions(cause: FaultType | "none", severity: Severity, device:
       );
       break;
     case "memory-pressure":
-      base.push("Capture process-memory snapshot; plan a controlled restart during the next maintenance window.");
+      base.push(
+        "Capture process-memory snapshot; plan a controlled restart during the next maintenance window.",
+      );
       break;
     case "power-instability":
       base.push("Verify PSU status, redundant feed availability, and UPS health for the rack.");
       break;
     case "interface-failure":
-      base.push("Verify interface link state; engage on-call for physical inspection if persistent.");
+      base.push(
+        "Verify interface link state; engage on-call for physical inspection if persistent.",
+      );
       break;
   }
   if (severity === "critical" || severity === "high") {
-    base.unshift("Request Operations Manager approval before any corrective action that may interrupt traffic.");
+    base.unshift(
+      "Request Operations Manager approval before any corrective action that may interrupt traffic.",
+    );
   }
   base.push(`Reference SOPs for ${device.type.replace("-", " ")} (knowledge base).`);
   return base;
@@ -448,15 +522,33 @@ function round(n: number, p = 0): number {
 
 export function severityColor(s: Severity): string {
   switch (s) {
-    case "healthy":  return "var(--color-status-healthy)";
-    case "observe":  return "var(--color-status-observe)";
-    case "warning":  return "var(--color-status-warning)";
-    case "high":     return "var(--color-status-warning)";
-    case "critical": return "var(--color-status-critical)";
-    case "offline":  return "var(--color-status-offline)";
+    case "healthy":
+      return "var(--color-status-healthy)";
+    case "observe":
+      return "var(--color-status-observe)";
+    case "warning":
+      return "var(--color-status-warning)";
+    case "high":
+      return "var(--color-status-warning)";
+    case "critical":
+      return "var(--color-status-critical)";
+    case "offline":
+      return "var(--color-status-offline)";
+    default:
+      return "var(--color-status-healthy)";
   }
 }
 
 export function severityLabel(s: Severity): string {
-  return { healthy: "Healthy", observe: "Observe", warning: "Warning", high: "High risk", critical: "Critical", offline: "Offline" }[s];
+  return (
+    {
+      healthy: "Healthy",
+      observe: "Observe",
+      low: "Low risk",
+      warning: "Warning",
+      high: "High risk",
+      critical: "Critical",
+      offline: "Offline",
+    }[s] || "Unknown"
+  );
 }

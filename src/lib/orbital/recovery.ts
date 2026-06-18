@@ -21,7 +21,7 @@ export function useSimulatedRecovery() {
               action: "RECOVERY_COMPLETED",
               entity_id: inc.id,
               entity_type: "incident",
-              description: "Simulated recovery applied and incident moved to monitoring."
+              description: "Simulated recovery applied and incident moved to monitoring.",
             });
           }
         }

@@ -17,7 +17,10 @@ function KnowledgeBasePage() {
   const { data: documents, refetch } = useQuery({
     queryKey: ["documents"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("documents").select("*").order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("documents")
+        .select("*")
+        .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },
@@ -27,32 +30,38 @@ function KnowledgeBasePage() {
     e.preventDefault();
     if (!file) return;
     setUploading(true);
-    
+
     try {
       const text = await file.text();
-      const { data: doc } = await supabase.from('documents').insert({
-        title: file.name,
-        category: 'procedure',
-        document_type: file.type || 'text/plain',
-        approval_status: 'approved',
-        extracted_text: text,
-        version: '1.0'
-      }).select().single();
+      const { data: doc } = await supabase
+        .from("documents")
+        .insert({
+          title: file.name,
+          category: "procedure",
+          document_type: file.type || "text/plain",
+          approval_status: "approved",
+          extracted_text: text,
+          version: "1.0",
+        })
+        .select()
+        .single();
 
       if (doc) {
         // Create chunks strictly 1000 chars wide
         const chunks = text.match(/.{1,1000}/g) || [];
         for (let i = 0; i < chunks.length; i++) {
-           await supabase.from('document_chunks').insert({
-             document_id: doc.id,
-             chunk_order: i,
-             chunk_text: chunks[i]
-           });
+          await supabase.from("document_chunks").insert({
+            document_id: doc.id,
+            chunk_order: i,
+            chunk_text: chunks[i],
+          });
         }
-        await supabase.from('audit_logs').insert({ action: 'DOCUMENT_UPLOADED', description: `Uploaded ${file.name}` });
+        await supabase
+          .from("audit_logs")
+          .insert({ action: "DOCUMENT_UPLOADED", description: `Uploaded ${file.name}` });
       }
       refetch();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
     } finally {
       setUploading(false);
@@ -62,17 +71,33 @@ function KnowledgeBasePage() {
 
   return (
     <div className="flex flex-col h-full min-h-screen pb-12">
-      <PageHeader eyebrow="Mission Resources" title="Knowledge Base" description="Approved operating procedures, equipment manuals, and troubleshooting guides used by Orbital Copilot." />
+      <PageHeader
+        eyebrow="Mission Resources"
+        title="Knowledge Base"
+        description="Approved operating procedures, equipment manuals, and troubleshooting guides used by Orbital Copilot."
+      />
 
       <div className="p-6 lg:p-8 flex-1">
         <div className="grid gap-6">
           <Section title="Upload Document">
-             <form onSubmit={handleUpload} className="surface-elevated rounded-lg border border-border p-4 flex items-center gap-4">
-                <input type="file" onChange={e => setFile(e.target.files?.[0] || null)} accept=".txt,.md,.csv" className="text-sm text-muted-foreground" />
-                <button disabled={!file || uploading} type="submit" className="bg-primary text-primary-foreground px-4 py-2 rounded text-sm disabled:opacity-50">
-                  {uploading ? 'Extracting text & uploading...' : 'Upload & Extract'}
-                </button>
-             </form>
+            <form
+              onSubmit={handleUpload}
+              className="surface-elevated rounded-lg border border-border p-4 flex items-center gap-4"
+            >
+              <input
+                type="file"
+                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                accept=".txt,.md,.csv"
+                className="text-sm text-muted-foreground"
+              />
+              <button
+                disabled={!file || uploading}
+                type="submit"
+                className="bg-primary text-primary-foreground px-4 py-2 rounded text-sm disabled:opacity-50"
+              >
+                {uploading ? "Extracting text & uploading..." : "Upload & Extract"}
+              </button>
+            </form>
           </Section>
 
           <Section title="Approved Documents">

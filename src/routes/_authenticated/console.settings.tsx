@@ -12,7 +12,7 @@ function SettingsPage() {
 
   return (
     <div className="flex flex-col h-full min-h-screen pb-12">
-      <PageHeader 
+      <PageHeader
         eyebrow="Mission Configuration"
         title="Settings & Profile"
         description="Manage your operator profile, role assignments, and system preferences."
@@ -26,7 +26,9 @@ function SettingsPage() {
                 <User className="h-8 w-8 text-muted-foreground" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-medium text-foreground">{profile?.full_name ?? "Operator"}</h3>
+                <h3 className="text-lg font-medium text-foreground">
+                  {profile?.full_name ?? "Operator"}
+                </h3>
                 <p className="text-sm text-muted-foreground">{user?.email}</p>
                 <div className="mt-4 flex items-center gap-2">
                   <Shield className="h-4 w-4 text-primary" />
@@ -41,15 +43,22 @@ function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-medium text-foreground">Active Provider</h4>
-                  <p className="text-sm text-muted-foreground">The AI engine currently driving predictive intelligence and copilot.</p>
+                  <p className="text-sm text-muted-foreground">
+                    The AI engine currently driving predictive intelligence and copilot.
+                  </p>
                 </div>
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-status-healthy)] bg-[var(--color-status-healthy)]/10 px-3 py-1 text-xs font-medium text-[var(--color-status-healthy)]">
-                  <span className="status-dot bg-current animate-orbital-pulse" /> Demonstration Grounded Provider
+                  <span className="status-dot bg-current animate-orbital-pulse" /> Demonstration
+                  Grounded Provider
                 </span>
               </div>
               <div className="bg-accent/50 p-4 rounded-md text-sm border border-border">
                 <strong>IBM Granite integration is planned but is not currently connected.</strong>
-                <p className="mt-1 text-muted-foreground">The current copilot uses a demonstration grounded provider over synthetic telemetry and the seeded knowledge base. Real IBM integration will be activated in a future phase.</p>
+                <p className="mt-1 text-muted-foreground">
+                  The current copilot uses a demonstration grounded provider over synthetic
+                  telemetry and the seeded knowledge base. Real IBM integration will be activated in
+                  a future phase.
+                </p>
               </div>
             </div>
           </Section>

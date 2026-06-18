@@ -1,37 +1,49 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
-  Activity, Boxes, BrainCircuit, ChevronLeft, Cpu, FileText, Gauge, Info,
-  Leaf, LogOut, Radio, Satellite, ShieldCheck, UserRound, Settings, ListTree
+  Activity,
+  Boxes,
+  BrainCircuit,
+  ChevronLeft,
+  Cpu,
+  FileText,
+  Gauge,
+  Info,
+  Leaf,
+  LogOut,
+  Radio,
+  Satellite,
+  ShieldCheck,
+  UserRound,
+  Settings,
+  ListTree,
 } from "lucide-react";
 import { useOrbital } from "@/lib/orbital/store";
 import { useAuth, roleLabel } from "@/lib/auth/AuthProvider";
 import { type ReactNode } from "react";
 
 const nav: { to: string; label: string; icon: typeof Gauge; exact?: boolean }[] = [
-  { to: "/console",                  label: "Mission Overview",        icon: Gauge, exact: true },
-  { to: "/console/topology",         label: "Network Topology",        icon: Boxes },
-  { to: "/console/devices",          label: "Devices",                 icon: Cpu },
-  { to: "/console/incidents",        label: "Active Incidents",        icon: Activity },
-  { to: "/console/predictions",      label: "Predictions",             icon: Activity },
-  { to: "/console/intelligence",     label: "Predictive Intelligence", icon: BrainCircuit },
-  { to: "/console/copilot",          label: "Orbital Copilot",         icon: Radio },
-  { to: "/console/knowledge",        label: "Knowledge Base",          icon: FileText },
-  { to: "/console/audit",            label: "Audit Logs",              icon: ListTree as typeof Gauge },
-  { to: "/console/sustainability",   label: "Sustainability Impact",   icon: Leaf },
-  { to: "/console/responsible-ai",   label: "Responsible AI",          icon: ShieldCheck },
-  { to: "/console/settings",         label: "Settings",                icon: Settings as typeof Gauge },
-  { to: "/console/about",            label: "About",                   icon: Info },
+  { to: "/console", label: "Mission Overview", icon: Gauge, exact: true },
+  { to: "/console/topology", label: "Network Topology", icon: Boxes },
+  { to: "/console/devices", label: "Devices", icon: Cpu },
+  { to: "/console/incidents", label: "Active Incidents", icon: Activity },
+  { to: "/console/predictions", label: "Predictions", icon: Activity },
+  { to: "/console/intelligence", label: "Predictive Intelligence", icon: BrainCircuit },
+  { to: "/console/copilot", label: "Orbital Copilot", icon: Radio },
+  { to: "/console/knowledge", label: "Knowledge Base", icon: FileText },
+  { to: "/console/audit", label: "Audit Logs", icon: ListTree as typeof Gauge },
+  { to: "/console/sustainability", label: "Sustainability Impact", icon: Leaf },
+  { to: "/console/responsible-ai", label: "Responsible AI", icon: ShieldCheck },
+  { to: "/console/settings", label: "Settings", icon: Settings as typeof Gauge },
+  { to: "/console/about", label: "About", icon: Info },
 ];
 
 export function AppShell({ children }: { children: ReactNode }) {
-  const pathname = useRouterState({ select: s => s.location.pathname });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { state, scores, running } = useOrbital();
   const { profile, user, primaryRole, signOut } = useAuth();
   const totalDevices = state.devices.length;
-  const offline = state.devices.filter(d => scores[d.id]?.severity === "offline").length;
+  const offline = state.devices.filter((d) => scores[d.id]?.severity === "offline").length;
   const displayName = profile?.full_name ?? user?.email?.split("@")[0] ?? "Operator";
-
-
 
   return (
     <div className="flex min-h-screen w-full bg-background text-foreground">
@@ -53,8 +65,10 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="px-3 pb-2 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
             Operations
           </div>
-          {nav.map(item => {
-            const active = item.exact ? pathname === item.to : pathname.startsWith(item.to) && item.to !== "/console";
+          {nav.map((item) => {
+            const active = item.exact
+              ? pathname === item.to
+              : pathname.startsWith(item.to) && item.to !== "/console";
             const isHome = item.to === "/console" && pathname === "/console";
             const Icon = item.icon;
             return (
@@ -78,8 +92,12 @@ export function AppShell({ children }: { children: ReactNode }) {
           <div className="surface-elevated p-3">
             <div className="flex items-center justify-between text-[11px] text-muted-foreground">
               <span className="font-mono uppercase tracking-[0.12em]">Engine</span>
-              <span className={`inline-flex items-center gap-1.5 font-mono ${running ? "text-[var(--color-status-healthy)]" : "text-[var(--color-status-warning)]"}`}>
-                <span className={`status-dot bg-current ${running ? "animate-orbital-pulse" : ""}`} />
+              <span
+                className={`inline-flex items-center gap-1.5 font-mono ${running ? "text-[var(--color-status-healthy)]" : "text-[var(--color-status-warning)]"}`}
+              >
+                <span
+                  className={`status-dot bg-current ${running ? "animate-orbital-pulse" : ""}`}
+                />
                 {running ? "live" : "paused"}
               </span>
             </div>
@@ -100,7 +118,9 @@ export function AppShell({ children }: { children: ReactNode }) {
                 </div>
               </div>
               <button
-                onClick={() => { void signOut(); }}
+                onClick={() => {
+                  void signOut();
+                }}
                 title="Sign out"
                 className="rounded-md border border-border bg-background p-1.5 text-muted-foreground transition hover:bg-accent hover:text-foreground"
               >

@@ -1,16 +1,30 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
-  Activity, Boxes, BrainCircuit, Lock, Radio, Satellite, ShieldCheck,
-  TrendingDown, Workflow,
+  Activity,
+  Boxes,
+  BrainCircuit,
+  Lock,
+  Radio,
+  Satellite,
+  ShieldCheck,
+  TrendingDown,
+  Workflow,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "OrbitalGuard AI · Predict Network Failures Before They Disrupt Operations" },
-      { name: "description", content: "Air-gapped predictive intelligence for mission-critical network operations. Monitor telemetry, detect anomalies, forecast failures, and coordinate human-controlled response — without sending operational data to the cloud." },
+      {
+        name: "description",
+        content:
+          "Air-gapped predictive intelligence for mission-critical network operations. Monitor telemetry, detect anomalies, forecast failures, and coordinate human-controlled response — without sending operational data to the cloud.",
+      },
       { property: "og:title", content: "OrbitalGuard AI" },
-      { property: "og:description", content: "Air-gapped predictive intelligence for mission-critical network operations." },
+      {
+        property: "og:description",
+        content: "Air-gapped predictive intelligence for mission-critical network operations.",
+      },
     ],
   }),
   component: Landing,
@@ -47,10 +61,18 @@ function Header() {
           </div>
         </div>
         <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-          <a href="#mission" className="hover:text-foreground">Mission</a>
-          <a href="#capabilities" className="hover:text-foreground">Capabilities</a>
-          <a href="#architecture" className="hover:text-foreground">Architecture</a>
-          <a href="#responsible-ai" className="hover:text-foreground">Responsible AI</a>
+          <a href="#mission" className="hover:text-foreground">
+            Mission
+          </a>
+          <a href="#capabilities" className="hover:text-foreground">
+            Capabilities
+          </a>
+          <a href="#architecture" className="hover:text-foreground">
+            Architecture
+          </a>
+          <a href="#responsible-ai" className="hover:text-foreground">
+            Responsible AI
+          </a>
         </nav>
         <Link
           to="/console"
@@ -91,8 +113,8 @@ function Hero() {
           <p className="mt-6 max-w-xl text-base text-muted-foreground md:text-lg">
             OrbitalGuard AI monitors secure network telemetry, detects anomalies, forecasts
             equipment failures, retrieves trusted troubleshooting procedures, and supports
-            human-controlled incident response — without exposing operational data to the
-            public internet.
+            human-controlled incident response — without exposing operational data to the public
+            internet.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
@@ -116,8 +138,8 @@ function Hero() {
             </Link>
           </div>
           <p className="mt-6 max-w-xl font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-            Demonstration uses synthetic mission-network data · No real operational
-            telemetry · Calculated outputs only
+            Demonstration uses synthetic mission-network data · No real operational telemetry ·
+            Calculated outputs only
           </p>
         </div>
 
@@ -170,15 +192,31 @@ function HeroVisual() {
   );
 }
 
-function HudCard({ label, value, sub, tone }: { label: string; value: string; sub: string; tone: "healthy" | "warning" | "critical" }) {
+function HudCard({
+  label,
+  value,
+  sub,
+  tone,
+}: {
+  label: string;
+  value: string;
+  sub: string;
+  tone: "healthy" | "warning" | "critical";
+}) {
   const color =
-    tone === "healthy" ? "text-[var(--color-status-healthy)]" :
-    tone === "warning" ? "text-[var(--color-status-warning)]" :
-                         "text-[var(--color-status-critical)]";
+    tone === "healthy"
+      ? "text-[var(--color-status-healthy)]"
+      : tone === "warning"
+        ? "text-[var(--color-status-warning)]"
+        : "text-[var(--color-status-critical)]";
   return (
     <div className="surface-elevated p-3">
-      <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{label}</div>
-      <div className={`mt-1 font-display text-2xl font-semibold tabular-nums ${color}`}>{value}</div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </div>
+      <div className={`mt-1 font-display text-2xl font-semibold tabular-nums ${color}`}>
+        {value}
+      </div>
       <div className="text-[11px] text-muted-foreground">{sub}</div>
     </div>
   );
@@ -189,9 +227,15 @@ function Sparkline() {
   const pts = [12, 11, 13, 10, 12, 11, 14, 12, 11, 12, 13, 15, 13, 12, 11, 13, 12, 14, 13, 12];
   const max = Math.max(...pts);
   const min = Math.min(...pts);
-  const w = 320, h = 70;
+  const w = 320,
+    h = 70;
   const step = w / (pts.length - 1);
-  const path = pts.map((v, i) => `${i === 0 ? "M" : "L"}${(i * step).toFixed(1)} ${(h - ((v - min) / (max - min || 1)) * (h - 8) - 4).toFixed(1)}`).join(" ");
+  const path = pts
+    .map(
+      (v, i) =>
+        `${i === 0 ? "M" : "L"}${(i * step).toFixed(1)} ${(h - ((v - min) / (max - min || 1)) * (h - 8) - 4).toFixed(1)}`,
+    )
+    .join(" ");
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="h-16 w-full">
       <defs>
@@ -230,13 +274,20 @@ function SatelliteCard() {
 }
 
 function DeviceTile({ name, status }: { name: string; status: "healthy" | "warning" }) {
-  const color = status === "warning" ? "text-[var(--color-status-warning)]" : "text-[var(--color-status-healthy)]";
+  const color =
+    status === "warning"
+      ? "text-[var(--color-status-warning)]"
+      : "text-[var(--color-status-healthy)]";
   return (
     <div className="surface-elevated p-3">
-      <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Device</div>
+      <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        Device
+      </div>
       <div className="mt-1 font-mono text-sm font-semibold">{name}</div>
       <div className={`mt-2 inline-flex items-center gap-2 text-xs ${color}`}>
-        <span className={`status-dot bg-current ${status === "warning" ? "" : "animate-orbital-pulse"}`} />
+        <span
+          className={`status-dot bg-current ${status === "warning" ? "" : "animate-orbital-pulse"}`}
+        />
         {status === "warning" ? "Observe · optical Rx degrading" : "Nominal"}
       </div>
     </div>
@@ -249,7 +300,7 @@ function StarField() {
     x: (i * 37) % 100,
     y: (i * 73) % 100,
     s: 0.6 + ((i * 13) % 10) / 10,
-    o: 0.2 + ((i * 7) % 8) / 10 * 0.6,
+    o: 0.2 + (((i * 7) % 8) / 10) * 0.6,
   }));
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
@@ -258,8 +309,11 @@ function StarField() {
           key={i}
           className="absolute rounded-full bg-foreground"
           style={{
-            left: `${s.x}%`, top: `${s.y}%`,
-            width: `${s.s}px`, height: `${s.s}px`, opacity: s.o,
+            left: `${s.x}%`,
+            top: `${s.y}%`,
+            width: `${s.s}px`,
+            height: `${s.s}px`,
+            opacity: s.o,
           }}
         />
       ))}
@@ -277,8 +331,8 @@ function SectionMission() {
         </h2>
         <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
           OrbitalGuard AI gives network operations teams an integrated environment to monitor
-          infrastructure health, investigate anomalies, predict failures, and manage incidents
-          with explainable analysis and authoritative human oversight.
+          infrastructure health, investigate anomalies, predict failures, and manage incidents with
+          explainable analysis and authoritative human oversight.
         </p>
       </div>
     </section>
@@ -287,12 +341,36 @@ function SectionMission() {
 
 function SectionCapabilities() {
   const items = [
-    { icon: Activity, title: "Statistical anomaly detection", body: "Z-score deviation analysis across latency, jitter, loss, CPU, temperature, optical Rx, and security telemetry — calculated from each device's own baseline." },
-    { icon: TrendingDown, title: "Predictive risk scoring", body: "Weighted operational-risk composition produces a 0–100 health score, anomaly score, failure-risk percentage, and prediction horizon for every device." },
-    { icon: Workflow, title: "Root-cause ranking", body: "Correlated symptoms rank likely causes — optical degradation, overheating, congestion, suspicious activity — with the supporting evidence shown." },
-    { icon: BrainCircuit, title: "Explainable predictions", body: "Every prediction lists contributing factors, confidence, data quality, model version, and a recommended human investigation step." },
-    { icon: Lock, title: "Air-gapped by default", body: "Telemetry, scores, and recommendations are computed locally. No operational data is sent to external AI services for core functionality." },
-    { icon: ShieldCheck, title: "Human-controlled response", body: "Critical actions require Operations Manager approval. OrbitalGuard recommends and explains; authorised personnel decide and act." },
+    {
+      icon: Activity,
+      title: "Statistical anomaly detection",
+      body: "Z-score deviation analysis across latency, jitter, loss, CPU, temperature, optical Rx, and security telemetry — calculated from each device's own baseline.",
+    },
+    {
+      icon: TrendingDown,
+      title: "Predictive risk scoring",
+      body: "Weighted operational-risk composition produces a 0–100 health score, anomaly score, failure-risk percentage, and prediction horizon for every device.",
+    },
+    {
+      icon: Workflow,
+      title: "Root-cause ranking",
+      body: "Correlated symptoms rank likely causes — optical degradation, overheating, congestion, suspicious activity — with the supporting evidence shown.",
+    },
+    {
+      icon: BrainCircuit,
+      title: "Explainable predictions",
+      body: "Every prediction lists contributing factors, confidence, data quality, model version, and a recommended human investigation step.",
+    },
+    {
+      icon: Lock,
+      title: "Air-gapped by default",
+      body: "Telemetry, scores, and recommendations are computed locally. No operational data is sent to external AI services for core functionality.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Human-controlled response",
+      body: "Critical actions require Operations Manager approval. OrbitalGuard recommends and explains; authorised personnel decide and act.",
+    },
   ];
   return (
     <section id="capabilities" className="border-t border-border/60 py-20">
@@ -305,7 +383,10 @@ function SectionCapabilities() {
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {items.map(({ icon: Icon, title, body }) => (
-            <div key={title} className="surface-panel p-6 transition-colors hover:border-primary/40">
+            <div
+              key={title}
+              className="surface-panel p-6 transition-colors hover:border-primary/40"
+            >
               <Icon className="h-5 w-5 text-primary" />
               <h3 className="mt-4 text-base font-semibold">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p>
@@ -328,8 +409,8 @@ function SectionArchitecture() {
           </h2>
           <p className="mt-4 text-muted-foreground">
             OrbitalGuard AI does not depend on external cloud-based AI services for its core
-            monitoring, prediction, retrieval, or incident-response functions. Every prediction
-            is reproducible from the underlying telemetry — there is no hidden inference path.
+            monitoring, prediction, retrieval, or incident-response functions. Every prediction is
+            reproducible from the underlying telemetry — there is no hidden inference path.
           </p>
           <ul className="mt-6 space-y-3 text-sm">
             {[
@@ -337,7 +418,7 @@ function SectionArchitecture() {
               "Document retrieval (planned) operates over a local approved knowledge base only.",
               "Optional cloud summarisation is clearly disclosed, disabled by default, and confined to retrieved passages.",
               "Service-role keys never leave the server. Critical actions require human approval.",
-            ].map(t => (
+            ].map((t) => (
               <li key={t} className="flex gap-3 text-muted-foreground">
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                 <span>{t}</span>
@@ -371,9 +452,7 @@ function ArchitectureDiagram() {
                 {row.r}
               </span>
             </div>
-            {i < arr.length - 1 && (
-              <div className="ml-6 h-3 w-px bg-border" />
-            )}
+            {i < arr.length - 1 && <div className="ml-6 h-3 w-px bg-border" />}
           </div>
         ))}
       </div>
@@ -387,14 +466,25 @@ function SectionResponsible() {
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-3 lg:gap-8">
         <div className="lg:col-span-1">
           <div className="chip">Responsible AI</div>
-          <h2 className="mt-3 font-display text-3xl font-semibold">Honest about what the system does — and doesn't.</h2>
+          <h2 className="mt-3 font-display text-3xl font-semibold">
+            Honest about what the system does — and doesn't.
+          </h2>
         </div>
         <div className="space-y-4 lg:col-span-2">
           {[
-            { t: "No fake accuracy claims.", b: "The current build is a statistical scoring prototype, not a trained ML classifier. Performance metrics are only shown when calculated from real evaluation runs." },
-            { t: "Insufficient evidence is stated, not invented.", b: "When telemetry coverage is insufficient, the system says so instead of producing a confident-looking guess." },
-            { t: "Final decisions remain with people.", b: "OrbitalGuard AI provides decision support. Authorised personnel review, approve, and control every critical operational action." },
-          ].map(x => (
+            {
+              t: "No fake accuracy claims.",
+              b: "The current build is a statistical scoring prototype, not a trained ML classifier. Performance metrics are only shown when calculated from real evaluation runs.",
+            },
+            {
+              t: "Insufficient evidence is stated, not invented.",
+              b: "When telemetry coverage is insufficient, the system says so instead of producing a confident-looking guess.",
+            },
+            {
+              t: "Final decisions remain with people.",
+              b: "OrbitalGuard AI provides decision support. Authorised personnel review, approve, and control every critical operational action.",
+            },
+          ].map((x) => (
             <div key={x.t} className="surface-panel p-5">
               <div className="text-sm font-semibold">{x.t}</div>
               <div className="mt-1.5 text-sm text-muted-foreground">{x.b}</div>
@@ -418,9 +508,8 @@ function SectionSustainability() {
             </h2>
             <p className="mt-4 text-muted-foreground">
               Early detection helps reduce emergency hardware replacement, extends equipment
-              lifespan, and improves the operational efficiency of mission-critical
-              infrastructure. Estimates shown are configurable prototype calculations — not
-              verified facts.
+              lifespan, and improves the operational efficiency of mission-critical infrastructure.
+              Estimates shown are configurable prototype calculations — not verified facts.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
@@ -428,9 +517,11 @@ function SectionSustainability() {
               { k: "SDG 9", v: "Industry, Innovation & Infrastructure" },
               { k: "SDG 12", v: "Responsible Consumption & Production" },
               { k: "Transparent", v: "Every estimate exposes its assumptions" },
-            ].map(c => (
+            ].map((c) => (
               <div key={c.k} className="surface-panel p-5">
-                <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-primary">{c.k}</div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-primary">
+                  {c.k}
+                </div>
                 <div className="mt-2 text-sm">{c.v}</div>
               </div>
             ))}
@@ -449,8 +540,8 @@ function SectionCTA() {
           Step into the Mission Console.
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Explore the live simulation, inspect device telemetry, and walk through the three
-          guided demonstration scenarios.
+          Explore the live simulation, inspect device telemetry, and walk through the three guided
+          demonstration scenarios.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
@@ -484,9 +575,15 @@ function Footer() {
           </span>
         </div>
         <div className="flex gap-6 text-sm text-muted-foreground">
-          <Link to="/console/responsible-ai" className="hover:text-foreground">Responsible AI</Link>
-          <Link to="/console/about" className="hover:text-foreground">About</Link>
-          <a href="#architecture" className="hover:text-foreground">Architecture</a>
+          <Link to="/console/responsible-ai" className="hover:text-foreground">
+            Responsible AI
+          </Link>
+          <Link to="/console/about" className="hover:text-foreground">
+            About
+          </Link>
+          <a href="#architecture" className="hover:text-foreground">
+            Architecture
+          </a>
         </div>
       </div>
     </footer>

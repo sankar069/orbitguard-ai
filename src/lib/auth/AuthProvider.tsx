@@ -1,7 +1,13 @@
 // Authentication context: session, profile, role.
 // Wires supabase.auth.onAuthStateChange and exposes a sign-out helper.
 import {
-  createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
@@ -49,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       supabase.from("user_roles").select("role").eq("user_id", uid),
     ]);
     setProfile((prof as Profile) ?? null);
-    setRoles((roleRows ?? []).map(r => r.role as AppRole));
+    setRoles((roleRows ?? []).map((r) => r.role as AppRole));
   }, []);
 
   useEffect(() => {
@@ -64,7 +70,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       if (sess?.user) {
         // Defer DB calls to avoid deadlocks inside listener
-        setTimeout(() => { void loadProfileAndRoles(sess.user.id); }, 0);
+        setTimeout(() => {
+          void loadProfileAndRoles(sess.user.id);
+        }, 0);
       }
     });
 
@@ -92,7 +100,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [queryClient, navigate]);
 
   const value = useMemo<AuthState>(() => {
-    const primaryRole = ROLE_PRIORITY.find(r => roles.includes(r)) ?? null;
+    const primaryRole = ROLE_PRIORITY.find((r) => roles.includes(r)) ?? null;
     return {
       loading,
       session,
@@ -101,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       roles,
       primaryRole,
       hasRole: (r) => roles.includes(r),
-      hasAny: (rs) => rs.some(r => roles.includes(r)),
+      hasAny: (rs) => rs.some((r) => roles.includes(r)),
       refresh,
       signOut,
     };
@@ -118,5 +126,13 @@ export function useAuth(): AuthState {
 
 export function roleLabel(role: AppRole | null): string {
   if (!role) return "No role assigned";
-  return ({ admin: "Administrator", manager: "Operations Manager", operator: "Operator", security: "Security Analyst", auditor: "Auditor" } as const)[role];
+  return (
+    {
+      admin: "Administrator",
+      manager: "Operations Manager",
+      operator: "Operator",
+      security: "Security Analyst",
+      auditor: "Auditor",
+    } as const
+  )[role];
 }

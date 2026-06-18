@@ -65,7 +65,9 @@ function AuthPage() {
           },
         });
         if (error) throw error;
-        setInfo("Account created. If email confirmation is enabled, check your inbox to verify your address, then sign in.");
+        setInfo(
+          "Account created. If email confirmation is enabled, check your inbox to verify your address, then sign in.",
+        );
         setMode("signin");
       } else {
         const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
@@ -85,7 +87,9 @@ function AuthPage() {
     setError(null);
     setBusy(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
+      const result = await lovable.auth.signInWithOAuth("google", {
+        redirect_uri: window.location.origin,
+      });
       if (result.error) throw result.error;
       if (result.redirected) return;
       navigate({ to: search.redirect ?? "/console", replace: true });
@@ -117,7 +121,11 @@ function AuthPage() {
           <div className="surface-panel p-6 shadow-xl">
             <div className="mb-5 flex items-center justify-between">
               <h1 className="font-display text-xl font-semibold">
-                {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Reset password"}
+                {mode === "signin"
+                  ? "Sign in"
+                  : mode === "signup"
+                    ? "Create account"
+                    : "Reset password"}
               </h1>
               <div className="chip">{mode === "forgot" ? "Recovery" : "Mission"}</div>
             </div>
@@ -134,7 +142,9 @@ function AuthPage() {
                 </button>
                 <div className="my-4 flex items-center gap-3">
                   <div className="h-px flex-1 bg-border" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">or email</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+                    or email
+                  </span>
                   <div className="h-px flex-1 bg-border" />
                 </div>
               </>
@@ -146,7 +156,7 @@ function AuthPage() {
                   <input
                     autoComplete="name"
                     value={name}
-                    onChange={e => setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     className="auth-input"
                     placeholder="A. Sharma"
                   />
@@ -154,18 +164,26 @@ function AuthPage() {
               )}
               <Field icon={<Mail className="h-3.5 w-3.5" />} label="Email">
                 <input
-                  type="email" required autoComplete="email"
-                  value={email} onChange={e => setEmail(e.target.value)}
-                  className="auth-input" placeholder="operator@example.com"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="auth-input"
+                  placeholder="operator@example.com"
                 />
               </Field>
               {mode !== "forgot" && (
                 <Field icon={<Lock className="h-3.5 w-3.5" />} label="Password">
                   <input
-                    type="password" required minLength={8}
+                    type="password"
+                    required
+                    minLength={8}
                     autoComplete={mode === "signin" ? "current-password" : "new-password"}
-                    value={password} onChange={e => setPassword(e.target.value)}
-                    className="auth-input" placeholder="At least 8 characters"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="auth-input"
+                    placeholder="At least 8 characters"
                   />
                 </Field>
               )}
@@ -186,23 +204,52 @@ function AuthPage() {
                 disabled={busy}
                 className="mt-2 flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
               >
-                {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <ArrowRight className="h-3.5 w-3.5" />}
-                {mode === "signin" ? "Sign in" : mode === "signup" ? "Create account" : "Send reset email"}
+                {busy ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <ArrowRight className="h-3.5 w-3.5" />
+                )}
+                {mode === "signin"
+                  ? "Sign in"
+                  : mode === "signup"
+                    ? "Create account"
+                    : "Send reset email"}
               </button>
             </form>
 
             <div className="mt-5 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
               {mode === "signin" ? (
                 <>
-                  <button onClick={() => { setMode("signup"); setError(null); setInfo(null); }} className="hover:text-foreground">
+                  <button
+                    onClick={() => {
+                      setMode("signup");
+                      setError(null);
+                      setInfo(null);
+                    }}
+                    className="hover:text-foreground"
+                  >
                     Create account
                   </button>
-                  <button onClick={() => { setMode("forgot"); setError(null); setInfo(null); }} className="inline-flex items-center gap-1 hover:text-foreground">
+                  <button
+                    onClick={() => {
+                      setMode("forgot");
+                      setError(null);
+                      setInfo(null);
+                    }}
+                    className="inline-flex items-center gap-1 hover:text-foreground"
+                  >
                     <KeyRound className="h-3 w-3" /> Forgot password
                   </button>
                 </>
               ) : (
-                <button onClick={() => { setMode("signin"); setError(null); setInfo(null); }} className="hover:text-foreground">
+                <button
+                  onClick={() => {
+                    setMode("signin");
+                    setError(null);
+                    setInfo(null);
+                  }}
+                  className="hover:text-foreground"
+                >
                   ← Back to sign in
                 </button>
               )}
@@ -234,12 +281,24 @@ function AuthPage() {
   );
 }
 
-function Field({ icon, label, children }: { icon: React.ReactNode; label: string; children: React.ReactNode }) {
+function Field({
+  icon,
+  label,
+  children,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <label className="block">
-      <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{label}</span>
+      <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </span>
       <div className="relative">
-        <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground">{icon}</span>
+        <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground">
+          {icon}
+        </span>
         {children}
       </div>
     </label>
@@ -249,7 +308,10 @@ function Field({ icon, label, children }: { icon: React.ReactNode; label: string
 function GoogleGlyph() {
   return (
     <svg className="h-4 w-4" viewBox="0 0 24 24" aria-hidden>
-      <path fill="#EA4335" d="M12 10.2v3.9h5.46c-.24 1.4-1.7 4.08-5.46 4.08-3.28 0-5.96-2.72-5.96-6.08s2.68-6.08 5.96-6.08c1.86 0 3.12.79 3.83 1.47l2.6-2.52C16.83 3.36 14.66 2.5 12 2.5 6.74 2.5 2.5 6.74 2.5 12S6.74 21.5 12 21.5c6.9 0 9.5-4.85 9.5-7.5 0-.51-.05-.9-.13-1.3H12z"/>
+      <path
+        fill="#EA4335"
+        d="M12 10.2v3.9h5.46c-.24 1.4-1.7 4.08-5.46 4.08-3.28 0-5.96-2.72-5.96-6.08s2.68-6.08 5.96-6.08c1.86 0 3.12.79 3.83 1.47l2.6-2.52C16.83 3.36 14.66 2.5 12 2.5 6.74 2.5 2.5 6.74 2.5 12S6.74 21.5 12 21.5c6.9 0 9.5-4.85 9.5-7.5 0-.51-.05-.9-.13-1.3H12z"
+      />
     </svg>
   );
 }
@@ -258,8 +320,9 @@ function safeAuthError(err: unknown): string {
   const raw = err instanceof Error ? err.message : String(err);
   // Hide internal details but preserve common user-facing causes.
   if (/invalid login credentials/i.test(raw)) return "Email or password is incorrect.";
-  if (/user already registered/i.test(raw))   return "An account with this email already exists. Try signing in.";
-  if (/rate limit|too many/i.test(raw))       return "Too many attempts. Try again in a few minutes.";
-  if (/email.*confirm/i.test(raw))            return "Please confirm your email address before signing in.";
+  if (/user already registered/i.test(raw))
+    return "An account with this email already exists. Try signing in.";
+  if (/rate limit|too many/i.test(raw)) return "Too many attempts. Try again in a few minutes.";
+  if (/email.*confirm/i.test(raw)) return "Please confirm your email address before signing in.";
   return raw.replace(/AuthApiError:\s*/, "");
 }

@@ -3,14 +3,18 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader, SeverityBadge } from "@/components/orbital/ui";
 import { format } from "date-fns";
-import { AlertCircle, Search, Filter } from "lucide-react";
+import { AlertCircle, Search, Filter, ShieldAlert } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/console/incidents")({
   component: IncidentsPage,
 });
 
 function IncidentsPage() {
-  const { data: incidents, isLoading, error } = useQuery({
+  const {
+    data: incidents,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["incidents"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -24,7 +28,7 @@ function IncidentsPage() {
 
   return (
     <div className="flex flex-col h-full min-h-screen pb-12">
-      <PageHeader 
+      <PageHeader
         eyebrow="Mission Control"
         title="Active Incidents"
         description="Monitor, triage, and resolve anomalous events detected across the fleet."
@@ -37,9 +41,9 @@ function IncidentsPage() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border-b border-border gap-4">
             <div className="relative max-w-sm w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input 
-                type="text" 
-                placeholder="Search incidents by ID, device, or site..." 
+              <input
+                type="text"
+                placeholder="Search incidents by ID, device, or site..."
                 className="w-full bg-background border border-border rounded-md pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary transition"
               />
             </div>
@@ -63,7 +67,9 @@ function IncidentsPage() {
                   <th className="px-4 py-3 font-medium text-muted-foreground">Device / Site</th>
                   <th className="px-4 py-3 font-medium text-muted-foreground">Detected At</th>
                   <th className="px-4 py-3 font-medium text-muted-foreground">Status</th>
-                  <th className="px-4 py-3 font-medium text-muted-foreground text-right">Actions</th>
+                  <th className="px-4 py-3 font-medium text-muted-foreground text-right">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -78,7 +84,10 @@ function IncidentsPage() {
                   </tr>
                 ) : error ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-8 text-center text-[var(--color-status-critical)]">
+                    <td
+                      colSpan={7}
+                      className="px-4 py-8 text-center text-[var(--color-status-critical)]"
+                    >
                       Failed to load incidents. Please check your connection.
                     </td>
                   </tr>
@@ -88,17 +97,25 @@ function IncidentsPage() {
                       <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-accent mb-4">
                         <ShieldAlert className="h-6 w-6 text-muted-foreground" />
                       </div>
-                      <h3 className="text-sm font-medium text-foreground mb-1">No active incidents</h3>
-                      <p className="text-xs text-muted-foreground">Your fleet is operating within normal parameters.</p>
+                      <h3 className="text-sm font-medium text-foreground mb-1">
+                        No active incidents
+                      </h3>
+                      <p className="text-xs text-muted-foreground">
+                        Your fleet is operating within normal parameters.
+                      </p>
                     </td>
                   </tr>
                 ) : (
                   incidents?.map((inc) => (
                     <tr key={inc.id} className="hover:bg-accent/40 transition">
                       <td className="px-4 py-3 font-mono text-xs">{inc.incident_number}</td>
-                      <td className="px-4 py-3"><SeverityBadge severity={inc.severity} /></td>
+                      <td className="px-4 py-3">
+                        <SeverityBadge severity={inc.severity} />
+                      </td>
                       <td className="px-4 py-3 font-medium">{inc.title}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{inc.device_id ?? "Unknown"} • {inc.site_id ?? "Unknown"}</td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {inc.device_id ?? "Unknown"} • {inc.site_id ?? "Unknown"}
+                      </td>
                       <td className="px-4 py-3 text-muted-foreground text-xs">
                         {format(new Date(inc.detected_at), "MMM d, HH:mm:ss")}
                       </td>
@@ -108,7 +125,7 @@ function IncidentsPage() {
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right">
-                        <Link 
+                        <Link
                           to="/console/incidents/$incidentId"
                           params={{ incidentId: inc.id }}
                           className="text-xs font-medium text-primary hover:underline"

@@ -5,7 +5,11 @@ export const Route = createFileRoute("/_authenticated/console")({
   head: () => ({
     meta: [
       { title: "Mission Console · OrbitalGuard AI" },
-      { name: "description", content: "Live mission console: monitor devices, inspect telemetry, predict failures, and walk through demonstration scenarios." },
+      {
+        name: "description",
+        content:
+          "Live mission console: monitor devices, inspect telemetry, predict failures, and walk through demonstration scenarios.",
+      },
     ],
   }),
   component: () => (

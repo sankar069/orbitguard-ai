@@ -19,9 +19,15 @@ function DevicesList() {
   const rows = useMemo(() => {
     const ql = q.trim().toLowerCase();
     return state.devices
-      .map(d => ({ d, s: scores[d.id], last: state.history[d.id].at(-1)! }))
+      .map((d) => ({ d, s: scores[d.id], last: state.history[d.id].at(-1)! }))
       .filter(({ d, s }) => {
-        if (ql && !d.id.toLowerCase().includes(ql) && !d.vendor.toLowerCase().includes(ql) && !d.model.toLowerCase().includes(ql)) return false;
+        if (
+          ql &&
+          !d.id.toLowerCase().includes(ql) &&
+          !d.vendor.toLowerCase().includes(ql) &&
+          !d.model.toLowerCase().includes(ql)
+        )
+          return false;
         if (siteFilter !== "all" && d.siteId !== siteFilter) return false;
         if (sev !== "all" && s.severity !== sev) return false;
         return true;
@@ -41,20 +47,39 @@ function DevicesList() {
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
             <input
-              value={q} onChange={e => setQ(e.target.value)}
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
               placeholder="Search device, vendor, model…"
               className="rounded-md border border-border bg-elevated py-2 pl-8 pr-3 font-mono text-xs"
             />
           </div>
-          <select value={siteFilter} onChange={e => setSiteFilter(e.target.value)} className="rounded-md border border-border bg-elevated px-3 py-2 font-mono text-xs">
+          <select
+            value={siteFilter}
+            onChange={(e) => setSiteFilter(e.target.value)}
+            className="rounded-md border border-border bg-elevated px-3 py-2 font-mono text-xs"
+          >
             <option value="all">All sites</option>
-            {sites.map(s => <option key={s.id} value={s.id}>{s.shortCode} · {s.name}</option>)}
+            {sites.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.shortCode} · {s.name}
+              </option>
+            ))}
           </select>
-          <select value={sev} onChange={e => setSev(e.target.value)} className="rounded-md border border-border bg-elevated px-3 py-2 font-mono text-xs">
+          <select
+            value={sev}
+            onChange={(e) => setSev(e.target.value)}
+            className="rounded-md border border-border bg-elevated px-3 py-2 font-mono text-xs"
+          >
             <option value="all">All severities</option>
-            {["healthy","observe","warning","high","critical","offline"].map(x => <option key={x} value={x}>{x}</option>)}
+            {["healthy", "observe", "warning", "high", "critical", "offline"].map((x) => (
+              <option key={x} value={x}>
+                {x}
+              </option>
+            ))}
           </select>
-          <div className="ml-auto text-xs text-muted-foreground">{rows.length} match{rows.length === 1 ? "" : "es"}</div>
+          <div className="ml-auto text-xs text-muted-foreground">
+            {rows.length} match{rows.length === 1 ? "" : "es"}
+          </div>
         </div>
 
         <div className="surface-panel overflow-hidden">
@@ -75,25 +100,46 @@ function DevicesList() {
               </thead>
               <tbody>
                 {rows.map(({ d, s, last }) => (
-                  <tr key={d.id} className="border-b border-border last:border-none hover:bg-accent/30">
+                  <tr
+                    key={d.id}
+                    className="border-b border-border last:border-none hover:bg-accent/30"
+                  >
                     <td className="px-4 py-2.5">
-                      <Link to="/console/devices/$deviceId" params={{ deviceId: d.id }} className="text-mono text-primary hover:underline">
+                      <Link
+                        to="/console/devices/$deviceId"
+                        params={{ deviceId: d.id }}
+                        className="text-mono text-primary hover:underline"
+                      >
                         {d.id}
                       </Link>
-                      <div className="text-[11px] text-muted-foreground">{d.vendor} · {d.model}</div>
+                      <div className="text-[11px] text-muted-foreground">
+                        {d.vendor} · {d.model}
+                      </div>
                     </td>
                     <td className="px-4 py-2.5 text-mono text-xs">{d.siteId.toUpperCase()}</td>
                     <td className="px-4 py-2.5 text-xs text-muted-foreground">{d.type}</td>
                     <td className="px-4 py-2.5 text-right text-mono">{s.healthScore.toFixed(1)}</td>
-                    <td className="px-4 py-2.5 text-right text-mono">{s.failureRisk.toFixed(0)}%</td>
-                    <td className="px-4 py-2.5 text-right text-mono">{last.latencyMs.toFixed(1)} ms</td>
+                    <td className="px-4 py-2.5 text-right text-mono">
+                      {s.failureRisk.toFixed(0)}%
+                    </td>
+                    <td className="px-4 py-2.5 text-right text-mono">
+                      {last.latencyMs.toFixed(1)} ms
+                    </td>
                     <td className="px-4 py-2.5 text-right text-mono">{last.cpuPct.toFixed(0)}%</td>
-                    <td className="px-4 py-2.5 text-right text-mono">{last.temperatureC.toFixed(1)}°</td>
-                    <td className="px-4 py-2.5"><SeverityBadge severity={s.severity} /></td>
+                    <td className="px-4 py-2.5 text-right text-mono">
+                      {last.temperatureC.toFixed(1)}°
+                    </td>
+                    <td className="px-4 py-2.5">
+                      <SeverityBadge severity={s.severity} />
+                    </td>
                   </tr>
                 ))}
                 {rows.length === 0 && (
-                  <tr><td colSpan={9} className="px-4 py-8 text-center text-sm text-muted-foreground">No devices match the filters.</td></tr>
+                  <tr>
+                    <td colSpan={9} className="px-4 py-8 text-center text-sm text-muted-foreground">
+                      No devices match the filters.
+                    </td>
+                  </tr>
                 )}
               </tbody>
             </table>

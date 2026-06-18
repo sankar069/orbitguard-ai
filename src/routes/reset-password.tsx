@@ -61,7 +61,8 @@ function ResetPassword() {
             <h1 className="mb-4 font-display text-xl font-semibold">Set a new password</h1>
             {!ready ? (
               <div className="rounded-md border border-border bg-elevated p-4 text-sm text-muted-foreground">
-                Waiting for recovery session… open this page from the password reset email you received.
+                Waiting for recovery session… open this page from the password reset email you
+                received.
               </div>
             ) : (
               <form onSubmit={submit} className="space-y-3">
@@ -73,7 +74,8 @@ function ResetPassword() {
                   </div>
                 )}
                 <button
-                  type="submit" disabled={busy}
+                  type="submit"
+                  disabled={busy}
                   className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition hover:opacity-90 disabled:opacity-60"
                 >
                   {busy && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
@@ -88,15 +90,28 @@ function ResetPassword() {
   );
 }
 
-function PassField({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+function PassField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
   return (
     <label className="block">
-      <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">{label}</span>
+      <span className="mb-1 block font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+        {label}
+      </span>
       <div className="relative">
         <Lock className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
         <input
-          type="password" required minLength={8}
-          value={value} onChange={e => onChange(e.target.value)}
+          type="password"
+          required
+          minLength={8}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
           className="w-full rounded-md border border-border bg-elevated px-3 py-2 pl-8 text-sm outline-none focus:border-[var(--color-ring)]"
         />
       </div>

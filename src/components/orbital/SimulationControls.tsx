@@ -19,19 +19,30 @@ export function SimulationControls() {
     <div className="surface-panel flex flex-wrap items-center gap-3 p-3">
       <div className="flex items-center gap-1.5">
         {running ? (
-          <button onClick={pause} className="ctrl"><Pause className="h-3.5 w-3.5" /> Pause</button>
+          <button onClick={pause} className="ctrl">
+            <Pause className="h-3.5 w-3.5" /> Pause
+          </button>
         ) : (
-          <button onClick={start} className="ctrl"><Play className="h-3.5 w-3.5" /> Resume</button>
+          <button onClick={start} className="ctrl">
+            <Play className="h-3.5 w-3.5" /> Resume
+          </button>
         )}
-        <button onClick={reset} className="ctrl"><RotateCcw className="h-3.5 w-3.5" /> Reset</button>
+        <button onClick={reset} className="ctrl">
+          <RotateCcw className="h-3.5 w-3.5" /> Reset
+        </button>
       </div>
 
       <div className="flex items-center gap-2 px-2">
-        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">Speed</span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground">
+          Speed
+        </span>
         <input
-          type="range" min={1} max={10} step={1}
+          type="range"
+          min={1}
+          max={10}
+          step={1}
           value={speed}
-          onChange={e => setSpeed(Number(e.target.value))}
+          onChange={(e) => setSpeed(Number(e.target.value))}
           className="h-1.5 w-28 cursor-pointer appearance-none rounded-full bg-border accent-[var(--color-primary)]"
           aria-label="Simulation speed"
         />
@@ -39,18 +50,34 @@ export function SimulationControls() {
       </div>
 
       <div className="ml-auto flex flex-wrap items-center gap-2">
-        <select value={device} onChange={e => setDevice(e.target.value)} className="ctrl-input">
-          {state.devices.map(d => <option key={d.id} value={d.id}>{d.id}</option>)}
+        <select value={device} onChange={(e) => setDevice(e.target.value)} className="ctrl-input">
+          {state.devices.map((d) => (
+            <option key={d.id} value={d.id}>
+              {d.id}
+            </option>
+          ))}
         </select>
-        <select value={fault} onChange={e => setFault(e.target.value as FaultType)} className="ctrl-input">
-          {FAULT_TYPES.map(f => <option key={f.id} value={f.id}>{f.label}</option>)}
+        <select
+          value={fault}
+          onChange={(e) => setFault(e.target.value as FaultType)}
+          className="ctrl-input"
+        >
+          {FAULT_TYPES.map((f) => (
+            <option key={f.id} value={f.id}>
+              {f.label}
+            </option>
+          ))}
         </select>
-        <button onClick={onInject} className="ctrl bg-primary text-primary-foreground border-primary hover:opacity-90">
+        <button
+          onClick={onInject}
+          className="ctrl bg-primary text-primary-foreground border-primary hover:opacity-90"
+        >
           <Zap className="h-3.5 w-3.5" /> Inject fault
         </button>
         {state.faults.length > 0 && (
           <button onClick={clearAll} className="ctrl">
-            <X className="h-3.5 w-3.5" /> Clear {state.faults.length} fault{state.faults.length > 1 ? "s" : ""}
+            <X className="h-3.5 w-3.5" /> Clear {state.faults.length} fault
+            {state.faults.length > 1 ? "s" : ""}
           </button>
         )}
       </div>

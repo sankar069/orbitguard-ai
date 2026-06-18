@@ -7,13 +7,7 @@ export type DeviceType =
   | "server"
   | "optical-mux";
 
-export type SiteId =
-  | "mcc"
-  | "gs-north"
-  | "gs-south"
-  | "dpc"
-  | "boc"
-  | "soc";
+export type SiteId = "mcc" | "gs-north" | "gs-south" | "dpc" | "boc" | "soc";
 
 export interface Site {
   id: SiteId;
@@ -39,7 +33,7 @@ export interface Device {
 export interface Link {
   id: string;
   from: string; // device id
-  to: string;   // device id
+  to: string; // device id
   bandwidthGbps: number;
   primary: boolean;
 }
@@ -85,24 +79,24 @@ export interface ActiveFault {
 export interface RiskComponent {
   key: string;
   label: string;
-  value: number;        // current normalised metric
-  risk: number;         // 0..100
-  weight: number;       // sums to 1.0 across components
+  value: number; // current normalised metric
+  risk: number; // 0..100
+  weight: number; // sums to 1.0 across components
   reason: string;
 }
 
-export type Severity = "healthy" | "observe" | "warning" | "high" | "critical" | "offline";
+export type Severity = "healthy" | "observe" | "low" | "warning" | "high" | "critical" | "offline";
 
 export interface ScoreResult {
   deviceId: string;
   timestamp: number;
-  healthScore: number;     // 0..100
-  anomalyScore: number;    // 0..100
-  failureRisk: number;     // 0..100 (probability %)
+  healthScore: number; // 0..100
+  anomalyScore: number; // 0..100
+  failureRisk: number; // 0..100 (probability %)
   predictedFailureType: FaultType | "none";
   predictionHorizonMinutes: number;
-  confidence: number;      // 0..1
-  dataQuality: number;     // 0..1
+  confidence: number; // 0..1
+  dataQuality: number; // 0..1
   severity: Severity;
   contributingFactors: RiskComponent[];
   rootCauseCandidates: { cause: FaultType | "stable"; probability: number; evidence: string[] }[];
