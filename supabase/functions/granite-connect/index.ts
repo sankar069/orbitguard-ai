@@ -111,6 +111,14 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers });
     }
 
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      {
+        auth: { persistSession: false, autoRefreshToken: false },
+      },
+    );
+
     // 4. JSON parsing
     let body: RequestBody;
     try {
@@ -244,7 +252,7 @@ serve(async (req) => {
       // If purely grounded explanation and no evidence found, fallback safely without calling Watsonx.
       if (mode === "grounded_explanation" && sourcesUsed === 0) {
         // Audit log
-        await supabaseClient.from("ai_audit_logs").insert({
+        await supabaseAdmin.from("ai_audit_logs").insert({
           user_id: user.id,
           mode,
           success: true,
@@ -422,7 +430,7 @@ ${serverContext}`,
     }
 
     // Audit Log Success
-    await supabaseClient.from("ai_audit_logs").insert({
+    await supabaseAdmin.from("ai_audit_logs").insert({
       user_id: user.id,
       mode,
       success: true,

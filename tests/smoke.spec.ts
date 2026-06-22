@@ -8,7 +8,11 @@ test.describe("Smoke Tests", () => {
     if (url.includes("/console")) {
       // already logged in? shouldn't be
     } else {
-      await expect(page.locator("text=Sign In").first() || page.locator("text=Log In").first() || page.locator("text=OrbitalGuard").first()).toBeVisible();
+      await expect(
+        page.locator("text=Sign In").first() ||
+          page.locator("text=Log In").first() ||
+          page.locator("text=OrbitalGuard").first(),
+      ).toBeVisible();
     }
   });
 

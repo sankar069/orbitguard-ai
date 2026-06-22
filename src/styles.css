@@ -151,7 +151,8 @@
     border-color: var(--color-border);
   }
 
-  html, body {
+  html,
+  body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -159,24 +160,40 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
 
-  .font-mono, code, kbd, pre, samp {
+  .font-mono,
+  code,
+  kbd,
+  pre,
+  samp {
     font-family: var(--font-mono);
   }
 
   /* Subtle scrollbars */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
   ::-webkit-scrollbar-thumb {
     background: var(--color-border);
     border-radius: 8px;
     border: 2px solid var(--color-background);
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-muted-foreground); }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-foreground);
+  }
 }
 
 /* Mission-control surface utilities */
@@ -203,8 +220,16 @@
 
 @utility hud-radial {
   background:
-    radial-gradient(ellipse at top, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 60%),
-    radial-gradient(ellipse at bottom right, color-mix(in oklab, var(--color-chart-5) 8%, transparent), transparent 55%);
+    radial-gradient(
+      ellipse at top,
+      color-mix(in oklab, var(--color-primary) 12%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      color-mix(in oklab, var(--color-chart-5) 8%, transparent),
+      transparent 55%
+    );
 }
 
 @utility text-mono {
@@ -238,21 +263,36 @@
 }
 
 @keyframes orbital-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.15); }
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
 }
 @utility animate-orbital-pulse {
   animation: orbital-pulse 2.4s ease-in-out infinite;
 }
 
 @keyframes star-drift {
-  from { transform: translateY(0); }
-  to { transform: translateY(-40px); }
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-40px);
+  }
 }
 
 @keyframes scan-sweep {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 @utility animate-scan {
   animation: scan-sweep 3.5s linear infinite;

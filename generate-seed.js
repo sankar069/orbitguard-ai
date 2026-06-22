@@ -1,5 +1,5 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import fs from "node:fs";
+import path from "node:path";
 
 function writeFixtures() {
   const fileContent = `
@@ -58,8 +58,8 @@ export const seedDocumentChunks = [
 export const seedSystemSettings = [
   { key: 'telemetry_retention_days', value: { days: 30 }, description: 'Number of days to keep raw telemetry' }
 ];
-`
-  fs.writeFileSync(path.join(process.cwd(), 'src/lib/orbital/seed-fixtures.ts'), fileContent)
+`;
+  fs.writeFileSync(path.join(process.cwd(), "src/lib/orbital/seed-fixtures.ts"), fileContent);
 }
 
-writeFixtures()
+writeFixtures();
